@@ -23,14 +23,26 @@ const app = express();
 //   allowedHeaders: ['Content-Type', 'Authorization'],
 // };
 
-if (process.env.NODE_ENV !== "production") {
-  const corsOptions = {
-    origin: "http://localhost:3000",
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
-  };
-  app.use(cors(corsOptions));
-}
+// if (process.env.NODE_ENV !== "production") {
+//   const corsOptions = {
+//     origin: "http://localhost:3000",
+//     credentials: true,
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   };
+//   app.use(cors(corsOptions));
+// }
+
+// app.use(cors());
+
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000" // Only allow localhost in development
+        : "https://aw-app.onrender.com/", // Your production domain
+    credentials: true, // Credentials are needed for session cookies if used
+  })
+);
 
 // Using cookieParser
 app.use(cookieParser());
