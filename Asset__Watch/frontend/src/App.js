@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import LoginPage from "./pages/Login";
 import ProfilePage from "./pages/Profile";
 import RegisterPage from "./pages/Register";
@@ -10,9 +10,30 @@ import { CustomThemeProvider } from "./themeContext";
 import Footer from "./pages/Footer";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import "./App.css";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { checkAuthState } from "./features/auth/authSlice";
 
 function App() {
+  const dispatch = useDispatch();
+  const [authChecked, setAuthChecked] = useState(false); // State to track if auth check has been done
   const location = useLocation(); // Get the current location
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(checkAuthState()).finally(() => {
+        setAuthChecked(true); // Set true after the auth check action is dispatched
+      });
+    } else {
+      setAuthChecked(true); // Also set true if no token to handle anonymous users
+    }
+  }, [dispatch]);
+
+  if (!authChecked) {
+    // Optionally, show a loading indicator or return null to wait until the check is complete
+    return <div>Loading...</div>;
+  }
 
   return (
     <CustomThemeProvider>
@@ -21,11 +42,13 @@ function App() {
         <TransitionGroup>
           <CSSTransition key={location.key} timeout={300} classNames='fade'>
             <Routes location={location}>
-              <Route path='/' element={<HomePage />} />
+              <Route path='/home' element={<HomePage />} />
               <Route path='/login' element={<LoginPage />} />
               <Route path='/register' element={<RegisterPage />} />
               <Route path='/profile' element={<ProfilePage />} />
               <Route path='/dashboard' element={<DashboardPage />} />
+              {/* Catch-all route - redirects to Home page for any unmatched routes */}
+              <Route path='*' element={<Navigate to='/home' replace />} />
               {/* Add more routes here as needed */}
             </Routes>
           </CSSTransition>
@@ -37,26 +60,6 @@ function App() {
 }
 
 export default App;
-
-// function App() {
-//   return (
-//     <CustomThemeProvider>
-//       <div className='App'>
-//         <NavBar />
-//         <Routes>
-//           <Route path='/' element={<HomePage />} />
-//           <Route path='/login' element={<LoginPage />} />
-//           <Route path='/register' element={<RegisterPage />} />
-//           <Route path='/profile' element={<ProfilePage />} />
-//           <Route path='/dashboard' element={<DashboardPage />} />
-//         </Routes>
-//         <Footer />
-//       </div>
-//     </CustomThemeProvider>
-//   );
-// }
-
-// export default App;
 
 // import "./App.css";
 // import { Routes, Route } from "react-router-dom";

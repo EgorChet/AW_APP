@@ -47,6 +47,7 @@ export const checkAuthState = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`/users/verify`);
+      console.log("CheckAuthState is working")
       // The server should return user information if authenticated
       return response.data;
     } catch (error) {

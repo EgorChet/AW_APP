@@ -37,8 +37,8 @@ const NavBar = () => {
     navigate("/");
   };
 
-  const pages = isAuthenticated ? [] : ["Login", "Register"];
-  const settings = ["Profile", "Dashboard", "Logout"];
+  const pages = isAuthenticated ? [] : ["Home", "Login", "Register"];
+  const settings = ["Home", "Profile", "Dashboard", "Logout"];
 
   return (
     <AppBar
@@ -54,7 +54,7 @@ const NavBar = () => {
             aria-label='menu'
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
             component={RouterLink}
-            to='/'
+            to='/home'
           >
             <Logo style={{ height: "100px" }} alt='Asset Watch' />
           </IconButton>

@@ -16,24 +16,6 @@ dotenv.config();
 // Creating an instance of express
 const app = express();
 
-//MY
-// const corsOptions = {
-//   origin: 'http://localhost:3000', // Adjust to your frontend's URL
-//   credentials: true, // This is important for cookies or Authorization headers
-//   allowedHeaders: ['Content-Type', 'Authorization'],
-// };
-
-// if (process.env.NODE_ENV !== "production") {
-//   const corsOptions = {
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//   };
-//   app.use(cors(corsOptions));
-// }
-
-// app.use(cors());
-
 app.use(
   cors({
     origin:
@@ -71,11 +53,11 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-// Defining a simple route for the root URL "/"
-app.get("/", (req, res) => {
-  // Sending a response to the client
-  res.send("Hello from the server! This is your Node.js application responding.");
-});
+// // Defining a simple route for the root URL "/"
+// app.get("/", (req, res) => {
+//   // Sending a response to the client
+//   res.send("Hello from the server! This is your Node.js application responding.");
+// });
 
 // AFTER all your API routes
 
@@ -89,5 +71,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Frontend enhancements"
+// git  commit -m"Serving Home page as default"
 // git push
