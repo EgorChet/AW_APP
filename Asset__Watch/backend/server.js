@@ -89,5 +89,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Resolving msg error on log in and register"
+// git  commit -m"Resolving base url issues"
 // git push
