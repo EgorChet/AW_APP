@@ -10,9 +10,7 @@ import { CustomThemeProvider } from "./themeContext";
 import Footer from "./pages/Footer";
 
 function App() {
-  // useEffect(() => {
-  //   console.log("Token on App load:", localStorage.getItem("token"));
-  // }, []);
+
   return (
     <CustomThemeProvider>
       <div className='App'>

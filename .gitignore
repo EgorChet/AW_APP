@@ -1,37 +1,40 @@
 # Node.js / Back-End
-Asset__Watch/auth/back-end/node_modules/
-Asset__Watch/auth/back-end/.env
-Asset__Watch/auth/back-end/*.log
-Asset__Watch/auth/back-end/*.pid
-Asset__Watch/auth/back-end/*.seed
-Asset__Watch/auth/back-end/*.pid.lock
-Asset__Watch/auth/back-end/log/
-Asset__Watch/auth/back-end/tmp/
-Asset__Watch/auth/back-end/pids/
-Asset__Watch/auth/back-end/heapdump/
+Asset__Watch/back-end/node_modules/
+Asset__Watch/back-end/.env
+Asset__Watch/back-end/*.log
+Asset__Watch/back-end/*.pid
+Asset__Watch/back-end/*.seed
+Asset__Watch/back-end/*.pid.lock
+Asset__Watch/back-end/log/
+Asset__Watch/back-end/tmp/
+Asset__Watch/back-end/pids/
+Asset__Watch/back-end/heapdump/
+Asset__Watch/backend/.end
 
 # Debug log from npm
-Asset__Watch/auth/back-end/npm-debug.log*
-Asset__Watch/auth/back-end/yarn-debug.log*
-Asset__Watch/auth/back-end/yarn-error.log*
+Asset__Watch/back-end/npm-debug.log*
+Asset__Watch/back-end/yarn-debug.log*
+Asset__Watch/back-end/yarn-error.log*
 
 # Front-End / React
-Asset__Watch/auth/front-end/node_modules/
-Asset__Watch/auth/front-end/.env.local
-Asset__Watch/auth/front-end/.env.development.local
-Asset__Watch/auth/front-end/.env.test.local
-Asset__Watch/auth/front-end/.env.production.local
-Asset__Watch/auth/front-end/build/
-Asset__Watch/auth/front-end/.cache/
-Asset__Watch/auth/front-end/coverage/
-Asset__Watch/auth/front-end/.vscode/
+frontend/.env
+Asset__Watch/frontend/.env
+Asset__Watch/front-end/node_modules/
+Asset__Watch/front-end/.env.local
+Asset__Watch/front-end/.env.development.local
+Asset__Watch/front-end/.env.test.local
+Asset__Watch/front-end/.env.production.local
+Asset__Watch/front-end/build/
+Asset__Watch/front-end/.cache/
+Asset__Watch/front-end/coverage/
+Asset__Watch/front-end/.vscode/
 
 # Dependency directories
-Asset__Watch/auth/front-end/node_modules/
-Asset__Watch/auth/front-end/jspm_packages/
+Asset__Watch/front-end/node_modules/
+Asset__Watch/front-end/jspm_packages/
 
 # Production build files
-Asset__Watch/auth/front-end/build/
+Asset__Watch/front-end/build/
 Asset__Watch/dist/
 
 # Optional npm cache directory
@@ -50,38 +53,38 @@ Asset__Watch/*.tgz
 Asset__Watch/.yarn-integrity
 
 # parcel-bundler cache (https://parceljs.org/)
-Asset__Watch/auth/front-end/.cache
-Asset__Watch/auth/front-end/.parcel-cache
+Asset__Watch/front-end/.cache
+Asset__Watch/front-end/.parcel-cache
 
 # Next.js build output
-Asset__Watch/auth/front-end/.next
+Asset__Watch/front-end/.next
 Asset__Watch/out
 
 # Nuxt.js build output
-Asset__Watch/auth/front-end/.nuxt
-Asset__Watch/auth/front-end/dist
+Asset__Watch/front-end/.nuxt
+Asset__Watch/front-end/dist
 
 # Gatsby files
-Asset__Watch/auth/front-end/.cache/
-Asset__Watch/auth/front-end/public
+Asset__Watch/front-end/.cache/
+Asset__Watch/front-end/public
 
 # Vuepress build output
-Asset__Watch/auth/front-end/.vuepress/dist
+Asset__Watch/front-end/.vuepress/dist
 
 # Serverless directories
-Asset__Watch/auth/front-end/.serverless
+Asset__Watch/front-end/.serverless
 
 # FuseBox cache
-Asset__Watch/auth/front-end/.fusebox
+Asset__Watch/front-end/.fusebox
 
 # DynamoDB Local files
-Asset__Watch/auth/front-end/.dynamodb
+Asset__Watch/front-end/.dynamodb
 
 # TernJS port file
-Asset__Watch/auth/front-end/.tern-port
+Asset__Watch/front-end/.tern-port
 
 # Stores VSCode versions used for testing VSCode extensions
-Asset__Watch/auth/front-end/.vscode-test
+Asset__Watch/front-end/.vscode-test
 
 # yarn v2
 Asset__Watch/.yarn/*

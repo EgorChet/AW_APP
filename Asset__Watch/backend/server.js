@@ -6,30 +6,31 @@ import dotenv from "dotenv";
 import usersRouter from "./routes/usersRoute.js";
 import stocksRouter from "./routes/stocksRoute.js";
 import cookieParser from "cookie-parser";
+import path from "path";
+import { fileURLToPath } from "url";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Configuring dotenv to manage environment variables
 dotenv.config();
 
 // Creating an instance of express
 const app = express();
 
-// Using cors for cross-origin resource sharing
-// app.use(cors());
+//MY
+// const corsOptions = {
+//   origin: 'http://localhost:3000', // Adjust to your frontend's URL
+//   credentials: true, // This is important for cookies or Authorization headers
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+// };
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000", // Replace with your frontend's origin
-//     credentials: true, // Required if your frontend needs to send cookies or authorization headers
-//   })
-// );
-
-const corsOptions = {
-  origin: 'http://localhost:3000', // Adjust to your frontend's URL
-  credentials: true, // This is important for cookies or Authorization headers
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
-
-app.use(cors(corsOptions));
+if (process.env.NODE_ENV !== "production") {
+  const corsOptions = {
+    origin: "http://localhost:3000",
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+  };
+  app.use(cors(corsOptions));
+}
 
 // Using cookieParser
 app.use(cookieParser());
@@ -53,8 +54,24 @@ app.use("/users", usersRouter);
 // Use the portfolio routes
 app.use("/api", stocksRouter);
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
+
 // Defining a simple route for the root URL "/"
 app.get("/", (req, res) => {
   // Sending a response to the client
   res.send("Hello from the server! This is your Node.js application responding.");
+});
+
+// AFTER all your API routes
+
+// Serve static files from the React app build directory
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+// The "catchall" handler: for any request that doesn't
+// match an API route, send back the frontend's index.html file.
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
 });

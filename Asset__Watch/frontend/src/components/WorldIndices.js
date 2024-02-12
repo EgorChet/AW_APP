@@ -43,14 +43,6 @@ const WorldIndices = () => {
 
   return (
     <Box sx={{ mt: 4, mx: 2 }}>
-      {/* <Typography
-        variant='h5'
-        gutterBottom
-        component='div'
-        sx={{ textAlign: "center", fontWeight: "bold" }}
-      >
-        World Indices
-      </Typography> */}
       {indicesData.length > 0 ? (
         indicesData.map((index, idx) => (
           <Paper
