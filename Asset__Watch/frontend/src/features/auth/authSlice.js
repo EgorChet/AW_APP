@@ -15,7 +15,8 @@ export const registerUser = createAsyncThunk(
       // Assuming successful registration doesn't automatically log the user in
       return response.data; // You might adjust this based on your backend response
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      // return rejectWithValue(error.response.data);
+      return rejectWithValue({ msg: 'An unexpected error occurred' });
     }
   }
 );
@@ -35,7 +36,8 @@ export const loginUser = createAsyncThunk("auth/login", async (userData, { rejec
       hasPortfolio: hasPortfolio,
     };
   } catch (error) {
-    return rejectWithValue(error.response.data);
+    // return rejectWithValue(error.response.data);
+    return rejectWithValue({ msg: 'An unexpected error occurred' });
   }
 });
 
