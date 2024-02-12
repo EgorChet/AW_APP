@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
-import { Container, Box, TextField, Button, Typography, Alert, Grid, Paper } from "@mui/material";
+import { Container, Box, TextField, Typography, Alert, Grid, Paper } from "@mui/material";
+import CustomButton from '../components/CustomButton';
 
 function LoginPage() {
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button
+          <CustomButton
             type='submit'
             fullWidth
             variant='contained'
@@ -76,7 +77,7 @@ function LoginPage() {
             sx={{ mt: 3, mb: 2, width: "50%", mx: "auto", display: "block" }}
           >
             Login
-          </Button>
+          </CustomButton>
         </Box>
       </Box>
 

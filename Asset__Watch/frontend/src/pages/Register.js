@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import CustomButton from "../components/CustomButton";
 import {
   Container,
   Box,
   TextField,
-  Button,
   Typography,
   Alert,
   CircularProgress,
@@ -80,7 +80,7 @@ function RegisterPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button
+          <CustomButton
             type='submit'
             fullWidth
             variant='contained'
@@ -89,7 +89,7 @@ function RegisterPage() {
             disabled={authStatus === "loading"}
           >
             {authStatus === "loading" ? <CircularProgress size={24} color='inherit' /> : "Register"}
-          </Button>
+          </CustomButton>
         </Box>
       </Box>
 

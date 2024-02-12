@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addStock } from "../features/stocks/stocksSlice";
-import { TextField, Button, Grid, Autocomplete, Snackbar, Alert, Container } from "@mui/material";
+import { TextField, Grid, Autocomplete, Snackbar, Alert, Container } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import axios from "axios";
 import { format } from "date-fns";
 import PropTypes from "prop-types";
+import CustomButton from "./CustomButton";
 
 const AddStockForm = ({ onStockAdded }) => {
   const [stockData, setStockData] = useState({
@@ -158,7 +159,7 @@ const AddStockForm = ({ onStockAdded }) => {
               alignItems: "center",
             }}
           >
-            <Button
+            <CustomButton
               type='submit'
               variant='contained'
               color='primary'
@@ -169,7 +170,7 @@ const AddStockForm = ({ onStockAdded }) => {
               }}
             >
               Add Stock
-            </Button>
+            </CustomButton>
           </Grid>
         </Grid>
       </Container>

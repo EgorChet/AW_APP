@@ -38,7 +38,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "development"
-        ? "http://localhost:3001" // Only allow localhost in development
+        ? "http://localhost:3000" // Only allow localhost in development
         : "https://aw-app.onrender.com/", // Your production domain
     credentials: true, // Credentials are needed for session cookies if used
   })
@@ -89,5 +89,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Resolving base url issues"
+// git  commit -m"Frontend enhancements"
 // git push

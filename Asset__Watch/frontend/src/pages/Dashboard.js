@@ -3,12 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchPortfolio, selectPortfolio } from "../features/stocks/stocksSlice";
 import { fetchUserProfile, selectCurrentUser } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
-import { Typography, Container, Grid, Box, Button } from "@mui/material";
+import { Typography, Container, Grid, Box } from "@mui/material";
 import Portfolio from "../components/Portfolio";
 import ProfileDetails from "../components/ProfileDetails";
 import AddStockForm from "../components/AddStocksForm";
-// // Import your component for displaying indices/news
-// import WorldIndices from "../components/WorldIndices";
+import CustomButton from "../components/CustomButton";
 
 const Dashboard = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -78,9 +77,9 @@ const Dashboard = () => {
           Start adding stocks to track your investments and watch your portfolio grow.
         </Typography>
         {!showAddStockForm && (
-          <Button variant='contained' onClick={handleAddStockClick}>
+          <CustomButton variant='contained' onClick={handleAddStockClick}>
             Add Stock
-          </Button>
+          </CustomButton>
         )}
       </Box>
 

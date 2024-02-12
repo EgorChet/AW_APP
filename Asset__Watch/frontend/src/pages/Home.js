@@ -1,8 +1,9 @@
 import React from "react";
-import { Typography, Container, Box, Button, Grid, Paper } from "@mui/material";
-// import { Link as RouterLink } from "react-router-dom";
+import { Typography, Container, Box, Grid, Paper } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import WorldIndices from "../components/WorldIndices"; // Assuming WorldIndices is a component
 import SamplePortfolio from "../components/SamplePortfolio"; // Assuming you create a SamplePortfolio component
+import CustomButton from '../components/CustomButton';
 
 function HomePage() {
   return (
@@ -16,9 +17,9 @@ function HomePage() {
           <Typography variant='h5'>
             Your one-stop solution for asset management and investment tracking.
           </Typography>
-          <Button variant='contained' color='primary' sx={{ mt: 3 }}>
+          <CustomButton variant='contained' color='primary' sx={{ mt: 3 }} component={RouterLink} to="/register">
             Get Started
-          </Button>
+          </CustomButton>
         </Box>
 
         {/* Features Overview */}
@@ -71,9 +72,9 @@ function HomePage() {
         {/* Call to Action */}
         <Box sx={{ my: 4, textAlign: "center" }}>
           <Typography variant='h5'>Ready to take control of your investments?</Typography>
-          <Button variant='contained' color='primary' sx={{ mt: 3 }}>
+          <CustomButton variant='contained' color='primary' sx={{ mt: 3 }} component={RouterLink} to="/register">
             Sign Up Now
-          </Button>
+          </CustomButton>
         </Box>
 
         {/* Footer - Create a Footer component with additional info */}

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Button, Typography, Card, Box, Avatar, IconButton, Grid } from "@mui/material";
+import { Typography, Card, Box, Avatar, IconButton, Grid } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 import WorldIndices from "./WorldIndices";
+import CustomButton from "./CustomButton";
 
 const ProfileDetails = () => {
   const navigate = useNavigate();
@@ -165,6 +166,7 @@ const ProfileDetails = () => {
       <Grid item xs={12} md={4}>
         <Card
           sx={{
+            background: "linear-gradient(45deg, #FF8E53 30%, #123456 90%)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -213,14 +215,15 @@ const ProfileDetails = () => {
               <FontAwesomeIcon icon={faLinkedinIn} size='lg' />
             </IconButton>
           </Box>
-          <Button variant='contained' color='primary' onClick={() => navigate("/profile")}>
+          <CustomButton variant='contained' color='primary' onClick={() => navigate("/profile")}>
             Update Profile
-          </Button>
+          </CustomButton>
         </Card>
       </Grid>
       <Grid item xs={12} md={4}>
         <Card
           sx={{
+            background: "linear-gradient(45deg, #123456 30%, #FF8E53 90%)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -263,6 +266,7 @@ const ProfileDetails = () => {
       <Grid item xs={12} md={4}>
         <Card
           sx={{
+            background: "linear-gradient(45deg, #FF8E53 30%, #123456 90%)",
             boxShadow: 3,
             borderRadius: 2,
             bgcolor: "background.paper",

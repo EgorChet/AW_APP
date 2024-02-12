@@ -80,7 +80,7 @@ const PortfolioStats = ({ stocks }) => {
             title='Current Value'
             value={`$${currentPortfolioValue.toFixed(2)}`}
             icon={<AccountBalanceIcon sx={{ color: "white" }} />}
-            color='success.main'
+            color="#123456"
           />
         </Grid>
         <Grid item xs={4}>
@@ -94,7 +94,7 @@ const PortfolioStats = ({ stocks }) => {
                 <TrendingDownIcon sx={{ color: "white" }} />
               )
             }
-            color={gainLoss >= 0 ? "success.dark" : "error.main"}
+            color={gainLoss >= 0 ? "success.main" : "error.main"}
           />
         </Grid>
       </Grid>
