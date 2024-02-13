@@ -65,12 +65,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Changed the logic of the whole app added an addtional table to my DB now the user can view edit and delete their purchases"
+// git  commit -m"Fixed bug with the Calendar Dates when adding stocks to portfolio"
 // git push
-
-
-// // Defining a simple route for the root URL "/"
-// app.get("/", (req, res) => {
-//   // Sending a response to the client
-//   res.send("Hello from the server! This is your Node.js application responding.");
-// });

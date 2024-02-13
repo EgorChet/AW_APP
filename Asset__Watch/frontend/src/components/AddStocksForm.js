@@ -17,24 +17,44 @@ const AddStockForm = ({ onStockAdded }) => {
     purchasePrice: "",
     purchase_date: null,
   });
-  const [symbolOptions, setSymbolOptions] = useState([]);
+  const [companyOptions, setCompanyOptions] = useState([]);
+  // const [symbolOptions, setSymbolOptions] = useState([]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // 'success' or 'error'
   const dispatch = useDispatch();
 
-  const handleSymbolInputChange = async (event, newInputValue) => {
-    if (newInputValue.length < 2) return;
+  // const handleSymbolInputChange = async (event, newInputValue) => {
+  //   if (newInputValue.length < 2) return;
+  //   try {
+  //     const response = await axios.get(
+  //       `https://cloud.iexapis.com/stable/ref-data/symbols?token=${process.env.REACT_APP_IEX_API_TOKEN}`
+  //     );
+  //     const symbols = response.data.filter((symbol) =>
+  //       symbol.name.toLowerCase().includes(newInputValue.toLowerCase())
+  //     );
+  //     setSymbolOptions(symbols.slice(0, 5));
+  //   } catch (error) {
+  //     console.error("Failed to fetch stock symbols:", error);
+  //   }
+  // };
+
+  const handleSymbolInputChange = async (event, value) => {
+    if (!value) return;
     try {
+      // Assuming you're using IEX Cloud or a similar API
       const response = await axios.get(
         `https://cloud.iexapis.com/stable/ref-data/symbols?token=${process.env.REACT_APP_IEX_API_TOKEN}`
       );
-      const symbols = response.data.filter((symbol) =>
-        symbol.name.toLowerCase().includes(newInputValue.toLowerCase())
-      );
-      setSymbolOptions(symbols.slice(0, 5));
+      const filteredCompanies = response.data
+        .filter((company) => company.name.toLowerCase().includes(value.toLowerCase()))
+        .map((company) => ({
+          label: company.name, // Displayed in the dropdown
+          symbol: company.symbol, // Used when a company is selected
+        }));
+      setCompanyOptions(filteredCompanies);
     } catch (error) {
-      console.error("Failed to fetch stock symbols:", error);
+      console.error("Failed to fetch company symbols:", error);
     }
   };
 
@@ -43,16 +63,20 @@ const AddStockForm = ({ onStockAdded }) => {
   };
 
   const handleDateChange = (newValue) => {
+    console.log("Selected Date: ", newValue);
     setStockData({ ...stockData, purchase_date: newValue });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Date before formatting: ", stockData.purchase_date);
     const formattedDate = stockData.purchase_date
-      ? format(stockData.purchase_date, "MM/dd/yyyy")
+      ? format(stockData.purchase_date, "yyyy-MM-dd")
       : null;
+    console.log("Formatted Date: ", formattedDate);
 
     try {
+      // Dispatch the action with the formatted date
       await dispatch(
         addStock({
           ...stockData,
@@ -111,13 +135,18 @@ const AddStockForm = ({ onStockAdded }) => {
           <Grid item xs={12}>
             <Autocomplete
               freeSolo
-              options={symbolOptions.map((option) => option.symbol)}
-              onInputChange={handleSymbolInputChange}
+              options={companyOptions}
+              getOptionLabel={(option) => option.label}
               onChange={(event, newValue) => {
-                setStockData({ ...stockData, stockSymbol: newValue });
+                setStockData({ ...stockData, stockSymbol: newValue.symbol });
               }}
               renderInput={(params) => (
-                <TextField {...params} label='Stock Symbol' variant='outlined' required fullWidth />
+                <TextField
+                  {...params}
+                  label='Company'
+                  variant='outlined'
+                  onChange={(event) => handleSymbolInputChange(event, event.target.value)}
+                />
               )}
             />
           </Grid>

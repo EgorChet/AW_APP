@@ -2,8 +2,14 @@
 import { db } from "../config/db.js";
 import axios from "axios";
 
-export async function addUserStock(userId, stockSymbol, numberofshares, purchasePrice) {
-  const purchaseDate = new Date().toISOString().slice(0, 10); // Current date in YYYY-MM-DD format
+export async function addUserStock(
+  userId,
+  stockSymbol,
+  numberofshares,
+  purchasePrice,
+  purchaseDate
+) {
+  // const purchaseDate = new Date().toISOString().slice(0, 10); // Current date in YYYY-MM-DD format
 
   // Insert the new purchase record
   await db("purchases").insert({

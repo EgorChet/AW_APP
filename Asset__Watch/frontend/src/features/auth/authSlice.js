@@ -1,10 +1,7 @@
 // src/features/auth/authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import axiosInstance from "../../config/axiosConfig"; // Import the configured Axios instance
 
-// const BASE_URL = "http://localhost:3001";
-const BASE_URL = process.env.REACT_APP_BASE_URL || "";
+import axiosInstance from "../../config/axiosConfig"; // Import the configured Axios instance
 
 // Async thunk for user registration
 export const registerUser = createAsyncThunk(
@@ -115,16 +112,9 @@ const authSlice = createSlice({
   reducers: {
     logout(state) {
       state.user = null;
+      state.accessToken = null; // Clear accessToken from the state
       state.isAuthenticated = false;
-      // Assuming you have a logout endpoint that clears the HTTP-Only cookie
-      axios
-        .post(`${BASE_URL}/users/logout`)
-        .then(() => {
-          console.log("User logged out");
-        })
-        .catch((error) => {
-          console.error("Logout error", error);
-        });
+      localStorage.removeItem("token"); // Clear the token from localStorage
     },
   },
   extraReducers: (builder) => {

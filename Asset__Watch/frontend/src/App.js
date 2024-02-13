@@ -1,44 +1,47 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  checkAuthState,
+  fetchUserProfile,
+  selectIsAuthenticated,
+  selectCurrentUser,
+} from "./features/auth/authSlice";
 import LoginPage from "./pages/Login";
 import ProfilePage from "./pages/Profile";
 import RegisterPage from "./pages/Register";
 import HomePage from "./pages/Home";
 import NavBar from "./pages/Nav";
 import DashboardPage from "./pages/Dashboard";
+import PurchasesList from "./pages/PurchasesList";
 import { CustomThemeProvider } from "./themeContext";
 import Footer from "./pages/Footer";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import "./App.css";
-import { useDispatch, useSelector } from "react-redux";
-import { checkAuthState, fetchUserProfile, selectIsAuthenticated } from "./features/auth/authSlice";
-import PurchasesList from "./pages/PurchasesList";
-import { selectCurrentUser } from "./features/auth/authSlice";
 
 function App() {
   const dispatch = useDispatch();
-  const [authChecked, setAuthChecked] = useState(false);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const currentUser = useSelector(selectCurrentUser);
   const location = useLocation();
+  const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
-    dispatch(checkAuthState())
-      .then(() => {
-        if (isAuthenticated) {
-          const userId = currentUser?.id;
-          if (userId) {
-            dispatch(fetchUserProfile(userId));
-          }
-        }
-      })
-      .finally(() => {
-        setAuthChecked(true);
-      });
-  }, [dispatch, isAuthenticated]);
+    // Immediately check authentication state on app load
+    dispatch(checkAuthState()).finally(() => {
+      setAuthChecked(true); // Set true once the auth state check is complete
+    });
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isAuthenticated && currentUser?.id) {
+      // Fetch user profile only if authenticated and user ID is available
+      dispatch(fetchUserProfile(currentUser.id));
+    }
+  }, [dispatch, isAuthenticated, currentUser?.id]);
 
   if (!authChecked) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>; // Optionally show a loading spinner here
   }
 
   return (
@@ -46,7 +49,7 @@ function App() {
       <div className='App'>
         <NavBar />
         <TransitionGroup>
-          <CSSTransition key={location.key} timeout={300} classNames='fade'>
+          <CSSTransition key={location.key} classNames='fade' timeout={300}>
             <Routes location={location}>
               <Route path='/home' element={<HomePage />} />
               <Route path='/login' element={<LoginPage />} />
@@ -65,6 +68,74 @@ function App() {
 }
 
 export default App;
+
+// import React, { useState, useEffect } from "react";
+// import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+// import LoginPage from "./pages/Login";
+// import ProfilePage from "./pages/Profile";
+// import RegisterPage from "./pages/Register";
+// import HomePage from "./pages/Home";
+// import NavBar from "./pages/Nav";
+// import DashboardPage from "./pages/Dashboard";
+// import { CustomThemeProvider } from "./themeContext";
+// import Footer from "./pages/Footer";
+// import { TransitionGroup, CSSTransition } from "react-transition-group";
+// import "./App.css";
+// import { useDispatch, useSelector } from "react-redux";
+// import { checkAuthState, fetchUserProfile, selectIsAuthenticated } from "./features/auth/authSlice";
+// import PurchasesList from "./pages/PurchasesList";
+// import { selectCurrentUser } from "./features/auth/authSlice";
+
+// function App() {
+//   const dispatch = useDispatch();
+//   const [authChecked, setAuthChecked] = useState(false);
+//   const isAuthenticated = useSelector(selectIsAuthenticated);
+//   const currentUser = useSelector(selectCurrentUser);
+//   const location = useLocation();
+
+//   useEffect(() => {
+//     dispatch(checkAuthState())
+//       .then(() => {
+//         if (isAuthenticated) {
+//           const userId = currentUser?.id;
+//           if (userId) {
+//             dispatch(fetchUserProfile(userId));
+//           }
+//         }
+//       })
+//       .finally(() => {
+//         setAuthChecked(true);
+//       });
+//   }, [dispatch, isAuthenticated]);
+
+//   if (!authChecked) {
+//     return <div>Loading...</div>;
+//   }
+
+//   return (
+//     <CustomThemeProvider>
+//       <div className='App'>
+//         <NavBar />
+//         <TransitionGroup>
+//           <CSSTransition key={location.key} timeout={300} classNames='fade'>
+//             <Routes location={location}>
+//               <Route path='/home' element={<HomePage />} />
+//               <Route path='/login' element={<LoginPage />} />
+//               <Route path='/register' element={<RegisterPage />} />
+//               <Route path='/profile' element={<ProfilePage />} />
+//               <Route path='/dashboard' element={<DashboardPage />} />
+//               <Route path='/purchases' element={<PurchasesList />} />
+//               <Route path='*' element={<Navigate to='/home' replace />} />
+//             </Routes>
+//           </CSSTransition>
+//         </TransitionGroup>
+//         <Footer />
+//       </div>
+//     </CustomThemeProvider>
+//   );
+// }
+
+// export default App;
 
 // import React, { useState } from "react";
 // import { Routes, Route, useLocation, Navigate } from "react-router-dom";
