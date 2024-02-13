@@ -151,7 +151,7 @@ const ProfileDetails = () => {
 
   if (!user) {
     return (
-      <Typography variant='h6' sx={{ mt: 2 }}>
+      <Typography component='h6' variant='h6' sx={{ mt: 2 }}>
         Loading user information...
       </Typography>
     );
@@ -195,7 +195,7 @@ const ProfileDetails = () => {
             </Box>
 
             <IconButton onClick={handleAvatarShuffle} sx={{ mb: 2 }}>
-              <FontAwesomeIcon icon={faRedoAlt} size='m' />
+              <FontAwesomeIcon icon={faRedoAlt} size='sm' />
             </IconButton>
             <Typography variant='h5' sx={{ color: "text.primary", mb: 1 }}>
               {`${user.name ?? ""} ${user.surname ?? ""}`}
@@ -289,123 +289,3 @@ const ProfileDetails = () => {
 };
 
 export default ProfileDetails;
-
-// import React from "react";
-// import { useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-// import {
-//   Button,
-//   Typography,
-//   Grid,
-//   Card,
-//   CardContent,
-//   Avatar,
-//   Stack,
-//   Link,
-//   Box,
-// } from "@mui/material";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faEnvelope, faUser, faBirthdayCake } from "@fortawesome/free-solid-svg-icons";
-// import { faFacebookF, faInstagram, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
-// import { faEdit } from "@fortawesome/free-solid-svg-icons";
-
-// const ProfileDetails = () => {
-//   const navigate = useNavigate();
-//   const user = useSelector((state) => state.auth.user);
-
-//   if (!user) {
-//     return (
-//       <Typography variant='h6' sx={{ mt: 2 }}>
-//         Loading user information...
-//       </Typography>
-//     );
-//   }
-
-//   const getSocialMediaHref = (label, value) => {
-//     switch (label) {
-//       case "Facebook":
-//         return `https://www.facebook.com/${value}`;
-//       case "Instagram":
-//         return `https://www.instagram.com/${value}`;
-//       case "LinkedIn":
-//         return `https://www.linkedin.com/in/${value}`;
-//       default:
-//         return value;
-//     }
-//   };
-
-//   const userInfo = [
-//     { label: "Email", value: user.email, Icon: faEnvelope, clickable: false },
-//     { label: "Full Name", value: `${user.name} ${user.surname}`, Icon: faUser, clickable: false },
-//     { label: "Age", value: user.age, Icon: faBirthdayCake, clickable: false },
-//     { label: "Facebook", value: user.facebook, Icon: faFacebookF, clickable: true },
-//     { label: "Instagram", value: user.instagram, Icon: faInstagram, clickable: true },
-//     { label: "LinkedIn", value: user.linkedin, Icon: faLinkedinIn, clickable: true },
-//   ].filter((info) => info.value);
-
-//   return (
-//     <Card
-//       sx={{ my: 4, width: "100%", boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)", transition: "0.3s" }}
-//     >
-//       <CardContent>
-//         <Typography variant='h4' gutterBottom component='div' sx={{ mb: 4, textAlign: "center" }}>
-//           Profile Information
-//         </Typography>
-//         <Grid container spacing={2}>
-//           {userInfo.map((info, index) => (
-//             <Grid item xs={12} sm={6} md={4} key={index}>
-//               <Stack direction='row' spacing={2} alignItems='center'>
-//                 {info.clickable ? (
-//                   <Link
-//                     href={getSocialMediaHref(info.label, info.value)}
-//                     target='_blank'
-//                     rel='noopener noreferrer'
-//                     sx={{
-//                       display: "flex",
-//                       alignItems: "center",
-//                       textDecoration: "none",
-//                       color: "inherit",
-//                     }}
-//                   >
-//                     <Avatar sx={{ bgcolor: "primary.main" }}>
-//                       <FontAwesomeIcon icon={info.Icon} style={{ color: "white" }} />
-//                     </Avatar>
-//                     <Typography variant='body1' sx={{ ml: 1 }}>
-//                       <strong>{info.label}:</strong> {info.value}
-//                     </Typography>
-//                   </Link>
-//                 ) : (
-//                   <>
-//                     <Avatar sx={{ bgcolor: "primary.main" }}>
-//                       <FontAwesomeIcon icon={info.Icon} style={{ color: "white" }} />
-//                     </Avatar>
-//                     <Typography variant='body1'>
-//                       <strong>{info.label}:</strong> {info.value}
-//                     </Typography>
-//                   </>
-//                 )}
-//               </Stack>
-//             </Grid>
-//           ))}
-//         </Grid>
-//         <Box display='flex' justifyContent='flex-end' mt={2}>
-//           <Button
-//             variant='contained'
-//             color='primary'
-//             size='small'
-//             sx={{
-//               boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
-//               "&:hover": { boxShadow: "0 12px 16px 0 rgba(0,0,0,0.24)" },
-//             }}
-//             onClick={() => navigate("/profile")}
-//             startIcon={<FontAwesomeIcon icon={faEdit} />}
-//           >
-//             Update Profile
-//           </Button>
-//         </Box>
-//       </CardContent>
-//     </Card>
-//   );
-// };
-
-// export default ProfileDetails;

@@ -53,12 +53,6 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-// // Defining a simple route for the root URL "/"
-// app.get("/", (req, res) => {
-//   // Sending a response to the client
-//   res.send("Hello from the server! This is your Node.js application responding.");
-// });
-
 // AFTER all your API routes
 
 // Serve static files from the React app build directory
@@ -71,5 +65,12 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Serving Home page as default"
+// git  commit -m"Changed the logic of the whole app added an addtional table to my DB now the user can view edit and delete their purchases"
 // git push
+
+
+// // Defining a simple route for the root URL "/"
+// app.get("/", (req, res) => {
+//   // Sending a response to the client
+//   res.send("Hello from the server! This is your Node.js application responding.");
+// });

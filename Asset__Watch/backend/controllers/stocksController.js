@@ -1,41 +1,46 @@
 // controllers/stocksController.js
-
 import axios from "axios";
-import { addUserStock, getUserStocks } from "../models/stocks.model.js";
+import {
+  addUserStock,
+  getUserStocks,
+  editPurchaseAndUpdateStock,
+  deletePurchaseAndUpdateStock,
+} from "../models/stocks.model.js";
+import { db } from "../config/db.js";
 
 const IEX_CLOUD_API_KEY = process.env.IEX_CLOUD_API_KEY;
 const IEX_BASE_URL = "https://cloud.iexapis.com/stable";
 
+// Controller to handle adding a stock to the user's portfolio
 export const addStockToPortfolio = async (req, res) => {
-  // Destructure your request body; remember to adjust according to the form data names if different
-  const { stockSymbol, numberofshares, averagePrice, purchase_date } = req.body;
-  const userId = req.user.id; // Ensure that this correctly references the decoded JWT payload where userId is stored
-
-  // Validate presence of required data
-  if (!stockSymbol || !numberofshares || !averagePrice || !purchase_date) {
+  // Extract relevant information from the request body
+  console.log(req.body); // Log the request body at the beginning of the addStockToPortfolio function.
+  const userId = req.user.id; // Assuming you have middleware to authenticate and add the user object
+  const { stockSymbol, numberofshares, purchasePrice, purchase_date } = req.body;
+  console.log("I am still here");
+  // Validate the request body for necessary information
+  if (!stockSymbol || !numberofshares || !purchasePrice || !purchase_date) {
     return res.status(400).json({
-      message: "Stock symbol, number of shares, average price, and purchase date are required.",
+      message:
+        "Missing required information. stockSymbol, numberofshares, purchasePrice and purchase_date are required.",
     });
   }
 
   try {
-    // Fetch stock data from IEX Cloud
-    const stockDataResponse = await axios.get(
-      `${IEX_BASE_URL}/stock/${stockSymbol}/quote?token=${IEX_CLOUD_API_KEY}`
-    );
-    const stockData = stockDataResponse.data;
+    // Add the user stock to the portfolio
+    await addUserStock(userId, stockSymbol, numberofshares, purchasePrice, purchase_date);
 
-    // Call the updated addUserStock with the new field names
-    const updateResult = await addUserStock(userId, stockSymbol, numberofshares, averagePrice, {
-      latestPrice: stockData.latestPrice,
-      companyName: stockData.companyName,
-      purchase_date: purchase_date, // Include the purchase_date field in the additionalData object
+    // If successful, send a response back
+    res.status(200).json({
+      message: "Stock successfully added to portfolio.",
     });
-
-    res.json({ message: "Stock added to portfolio", stockData, updateResult });
   } catch (error) {
-    console.error("Error while adding stock to portfolio:", error);
-    res.status(500).json({ message: "Error adding stock to portfolio", error: error.message });
+    // Handle any errors
+    console.error("Error adding stock to portfolio:", error);
+    res.status(500).json({
+      message: "An error occurred while adding the stock to the portfolio.",
+      error: error.message,
+    });
   }
 };
 
@@ -57,5 +62,55 @@ export const getStockPortfolio = async (req, res) => {
     res.json(updatedStocks);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving stock portfolio", error: error.message });
+  }
+};
+
+export const getPurchasesByUser = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const purchases = await db("purchases").where({ user_id: userId }).select("*");
+    res.json(purchases);
+  } catch (error) {
+    console.error("Error fetching purchases:", error);
+    res.status(500).json({ message: "Failed to fetch purchases" });
+  }
+};
+
+export const editPurchase = async (req, res) => {
+  const purchaseId = req.params.purchaseId; // Correctly extracting purchaseId from the route parameter
+  const userId = req.user.id; // Extracted from req.user, assuming your authentication middleware adds it
+  const { number_of_stocks_purchased, purchase_price, purchase_date } = req.body;
+
+  try {
+    // Pass the extracted parameters to the model function
+    const updatedPurchase = await editPurchaseAndUpdateStock(
+      purchaseId,
+      userId,
+      { number_of_stocks_purchased, purchase_price, purchase_date }
+    );
+
+    // Respond with the updated purchase or a success message
+    res.json({ message: "Purchase updated and stock information recalculated successfully.", updatedPurchase });
+  } catch (error) {
+    console.error("Error updating purchase and recalculating stock information:", error);
+    res.status(500).json({
+      message: "Failed to update purchase and recalculate stock information",
+      error: error.message,
+    });
+  }
+};
+
+export const deletePurchase = async (req, res) => {
+  const { purchaseId } = req.params; // Ensure your route parameter matches this
+  const userId = req.user.id; // Assuming your authentication middleware adds `user` to `req`
+
+  try {
+    await deletePurchaseAndUpdateStock(purchaseId, userId);
+    res.json({ message: "Purchase deleted successfully and portfolio updated." });
+  } catch (error) {
+    console.error("Error deleting purchase and updating portfolio:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to delete purchase and update portfolio", error: error.message });
   }
 };

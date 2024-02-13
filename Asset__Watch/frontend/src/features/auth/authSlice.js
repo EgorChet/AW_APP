@@ -4,7 +4,7 @@ import axios from "axios";
 import axiosInstance from "../../config/axiosConfig"; // Import the configured Axios instance
 
 // const BASE_URL = "http://localhost:3001";
-const BASE_URL = process.env.REACT_APP_BASE_URL || '';
+const BASE_URL = process.env.REACT_APP_BASE_URL || "";
 
 // Async thunk for user registration
 export const registerUser = createAsyncThunk(
@@ -16,7 +16,7 @@ export const registerUser = createAsyncThunk(
       return response.data; // You might adjust this based on your backend response
     } catch (error) {
       // return rejectWithValue(error.response.data);
-      return rejectWithValue({ msg: 'An unexpected error occurred' });
+      return rejectWithValue({ msg: "An unexpected error occurred" });
     }
   }
 );
@@ -36,8 +36,7 @@ export const loginUser = createAsyncThunk("auth/login", async (userData, { rejec
       hasPortfolio: hasPortfolio,
     };
   } catch (error) {
-    // return rejectWithValue(error.response.data);
-    return rejectWithValue({ msg: 'An unexpected error occurred' });
+    return rejectWithValue(error.response.data);
   }
 });
 
@@ -47,7 +46,7 @@ export const checkAuthState = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`/users/verify`);
-      console.log("CheckAuthState is working")
+      // console.log("CheckAuthState is working")
       // The server should return user information if authenticated
       return response.data;
     } catch (error) {
@@ -179,7 +178,6 @@ export const selectCurrentUser = (state) => state.auth.user;
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
 export const selectIsProfileComplete = (state) => state.auth.isProfileComplete;
 export const selectHasPortfolio = (state) => state.auth.hasPortfolio;
-
 
 export const { logout } = authSlice.actions;
 

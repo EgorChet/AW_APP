@@ -131,34 +131,3 @@ export const updateProfile = async (req, res) => {
     res.status(500).json({ msg: "Error updating profile" });
   }
 };
-
-// export const _login = async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
-//     const users = await login(email.toLowerCase());
-//     if (users.length === 0) {
-//       return res.status(404).json({ msg: "Email not found" });
-//     }
-
-//     const user = users[0];
-//     const match = bcrypt.compareSync(password, user.password);
-
-//     if (!match) {
-//       return res.status(401).json({ msg: "Wrong password" });
-//     }
-
-//     // Adjusted payload keys for consistency (e.g., use 'id' instead of 'userid')
-//     const accessToken = jwt.sign(
-//       { id: user.id, email: user.email }, // Consistent payload keys
-//       process.env.JWT_ACCESS_SECRET,
-//       { expiresIn: "15m" }
-//     );
-
-//     // Include user ID in the response if you need it on the client side
-//     // But it's often enough to just have the accessToken, which contains the userID within
-//     res.json({ accessToken, user: { id: user.id, email: user.email } });
-//   } catch (error) {
-//     console.error("_login=>", error); // Use console.error for errors
-//     res.status(500).json({ msg: "Something went wrong during login" });
-//   }
-// };
