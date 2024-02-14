@@ -17,8 +17,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import LoginIcon from "@mui/icons-material/Login"; // Import login icon
-import AppRegistrationIcon from "@mui/icons-material/AppRegistration"; // Import registration icon
+import LoginIcon from "@mui/icons-material/Login";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import { ReactComponent as Logo } from "../components/logo_assetwatch_schwarz.svg";
 
 const NavBar = () => {
@@ -31,78 +31,58 @@ const NavBar = () => {
 
   const handleMobileNavChange = (event, newValue) => {
     setMobileNavValue(newValue);
-    // Adjust navigation based on the selected tab and authentication state
-    const paths = isAuthenticated
-      ? ["/", "/dashboard", "/purchases", ""]
-      : ["/", "/login", "/register"];
-    const action =
-      isAuthenticated && newValue === 3
-        ? () => dispatch(logout())
-        : () => navigate(paths[newValue]);
-    action();
-  };
-
-  // Adjust navigation items based on authentication state
-  const navigationItems = isAuthenticated
-    ? [
-        { label: "Home", icon: <HomeIcon />, path: "/" },
-        { label: "Dashboard", icon: <DashboardIcon />, path: "/dashboard" },
-        { label: "Purchases", icon: <ShoppingBasketIcon />, path: "/purchases" },
-        { label: "Logout", icon: <ExitToAppIcon />, action: () => dispatch(logout()) },
-      ]
-    : [
-        { label: "Home", icon: <HomeIcon />, path: "/" },
-        { label: "Login", icon: <LoginIcon />, path: "/login" },
-        { label: "Register", icon: <AppRegistrationIcon />, path: "/register" },
-      ];
-
-  const handleNavigation = (item) => {
-    if (item.action) {
-      item.action();
-    } else {
-      navigate(item.path);
+    const paths = isAuthenticated ? ["/", "/dashboard", "/purchases", ""] : ["/", "/login", "/register"];
+    if(newValue < paths.length) {
+      navigate(paths[newValue]);
+    }
+    if(isAuthenticated && newValue === 3) {
+      dispatch(logout());
     }
   };
 
+  const navigationItems = isAuthenticated ? [
+    { label: "Home", icon: <HomeIcon />, path: "/" },
+    { label: "Dashboard", icon: <DashboardIcon />, path: "/dashboard" },
+    { label: "Purchases", icon: <ShoppingBasketIcon />, path: "/purchases" },
+  ] : [
+    { label: "Home", icon: <HomeIcon />, path: "/" },
+    { label: "Login", icon: <LoginIcon />, path: "/login" },
+    { label: "Register", icon: <AppRegistrationIcon />, path: "/register" },
+  ];
+
   return (
     <>
-      <AppBar
-        position='static'
-        sx={{ background: "linear-gradient(45deg, #796f6d 30%, #2f4d65 90%)", padding: "10px 0" }}
-      >
-        <Container maxWidth='xl'>
-          <Toolbar
-            disableGutters
-            sx={{ justifyContent: "space-between", flexDirection: isMobile ? "column" : "row" }}
-          >
-            <Logo
-              style={{ height: "100px", maxWidth: "100%", margin: "0 auto", cursor: "pointer" }}
-              alt='Asset Watch'
-              onClick={() => navigate("/")}
-            />
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              {navigationItems.map((item) => (
-                <Button key={item.label} color='inherit' onClick={() => handleNavigation(item)}>
-                  {item.label}
-                </Button>
-              ))}
-            </Box>
+      <AppBar position="static" sx={{ background: "linear-gradient(45deg, #796f6d 30%, #2f4d65 90%)", padding: "10px 0" }}>
+        <Container maxWidth="xl">
+          <Toolbar disableGutters sx={{ justifyContent: "space-between", flexDirection: isMobile ? "column" : "row" }}>
+            <Logo style={{ height: "80px", cursor: "pointer" }} alt="Asset Watch" onClick={() => navigate("/")} />
+            {!isMobile && (
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                {navigationItems.map((item, index) => (
+                  <Button key={index} color="inherit" onClick={() => navigate(item.path)}>
+                    {item.label}
+                  </Button>
+                ))}
+                {isAuthenticated && (
+                  <Button color="inherit" onClick={() => { dispatch(logout()); navigate("/"); }}>
+                    Logout
+                  </Button>
+                )}
+              </Box>
+            )}
           </Toolbar>
         </Container>
       </AppBar>
 
-      {/* Bottom Navigation for Mobile Devices */}
       {isMobile && (
         <Box sx={{ width: "100%", position: "fixed", bottom: 0, zIndex: 1300 }}>
           <BottomNavigation value={mobileNavValue} onChange={handleMobileNavChange} showLabels>
             {navigationItems.map((item, index) => (
-              <BottomNavigationAction
-                key={index}
-                label={item.label}
-                icon={item.icon}
-                onClick={() => handleNavigation(item)}
-              />
+              <BottomNavigationAction key={index} label={item.label} icon={item.icon} onClick={() => navigate(item.path)} />
             ))}
+            {isAuthenticated && (
+              <BottomNavigationAction label="Logout" icon={<ExitToAppIcon />} onClick={() => { dispatch(logout()); navigate("/"); }} />
+            )}
           </BottomNavigation>
         </Box>
       )}
@@ -111,6 +91,121 @@ const NavBar = () => {
 };
 
 export default NavBar;
+
+
+// import React, { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { useDispatch, useSelector } from "react-redux";
+// import { logout } from "../features/auth/authSlice";
+// import {
+//   AppBar,
+//   Box,
+//   Button,
+//   Container,
+//   Toolbar,
+//   useTheme,
+//   useMediaQuery,
+//   BottomNavigation,
+//   BottomNavigationAction,
+// } from "@mui/material";
+// import HomeIcon from "@mui/icons-material/Home";
+// import DashboardIcon from "@mui/icons-material/Dashboard";
+// import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+// import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+// import LoginIcon from "@mui/icons-material/Login"; // Import login icon
+// import AppRegistrationIcon from "@mui/icons-material/AppRegistration"; // Import registration icon
+// import { ReactComponent as Logo } from "../components/logo_assetwatch_schwarz.svg";
+
+// const NavBar = () => {
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+//   const theme = useTheme();
+//   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+//   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+//   const [mobileNavValue, setMobileNavValue] = useState(0);
+
+//   const handleMobileNavChange = (event, newValue) => {
+//     setMobileNavValue(newValue);
+//     // Adjust navigation based on the selected tab and authentication state
+//     const paths = isAuthenticated
+//       ? ["/", "/dashboard", "/purchases", ""]
+//       : ["/", "/login", "/register"];
+//     const action =
+//       isAuthenticated && newValue === 3
+//         ? () => dispatch(logout())
+//         : () => navigate(paths[newValue]);
+//     action();
+//   };
+
+//   // Adjust navigation items based on authentication state
+//   const navigationItems = isAuthenticated
+//     ? [
+//         { label: "Home", icon: <HomeIcon />, path: "/" },
+//         { label: "Dashboard", icon: <DashboardIcon />, path: "/dashboard" },
+//         { label: "Purchases", icon: <ShoppingBasketIcon />, path: "/purchases" },
+//         { label: "Logout", icon: <ExitToAppIcon />, action: () => dispatch(logout()) },
+//       ]
+//     : [
+//         { label: "Home", icon: <HomeIcon />, path: "/" },
+//         { label: "Login", icon: <LoginIcon />, path: "/login" },
+//         { label: "Register", icon: <AppRegistrationIcon />, path: "/register" },
+//       ];
+
+//   const handleNavigation = (item) => {
+//     if (item.action) {
+//       item.action();
+//     } else {
+//       navigate(item.path);
+//     }
+//   };
+
+//   return (
+//     <>
+//       <AppBar
+//         position='static'
+//         sx={{ background: "linear-gradient(45deg, #796f6d 30%, #2f4d65 90%)", padding: "10px 0" }}
+//       >
+//         <Container maxWidth='xl'>
+//           <Toolbar
+//             disableGutters
+//             sx={{ justifyContent: "space-between", flexDirection: isMobile ? "column" : "row" }}
+//           >
+//             <Logo
+//               style={{ height: "100px", maxWidth: "100%", margin: "0 auto", cursor: "pointer" }}
+//               alt='Asset Watch'
+//               onClick={() => navigate("/")}
+//             />
+//             <Box sx={{ display: "flex", alignItems: "center" }}>
+//               {navigationItems.map((item) => (
+//                 <Button key={item.label} color='inherit' onClick={() => handleNavigation(item)}>
+//                   {item.label}
+//                 </Button>
+//               ))}
+//             </Box>
+//           </Toolbar>
+//         </Container>
+//       </AppBar>
+
+//       {/* Bottom Navigation for Mobile Devices */}
+//       {isMobile && (
+//         <Box sx={{ width: "100%", position: "fixed", bottom: 0, zIndex: 1300 }}>
+//           <BottomNavigation value={mobileNavValue} onChange={handleMobileNavChange} showLabels>
+//             {navigationItems.map((item, index) => (
+//               <BottomNavigationAction
+//                 key={index}
+//                 label={item.label}
+//                 icon={item.icon}
+//                 onClick={() => handleNavigation(item)}
+//               />
+//             ))}
+//           </BottomNavigation>
+//         </Box>
+//       )}
+//     </>
+//   );
+// };
+
+// export default NavBar;
 
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
