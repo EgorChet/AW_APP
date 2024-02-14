@@ -70,7 +70,7 @@ const PortfolioStats = ({ stocks }) => {
         <Grid item xs={4}>
           <StatBox
             title='Money Invested'
-            value={`$${totalInvested.toFixed(2)}`}
+            value={`$${totalInvested.toFixed(0).toLocaleString('de-DE')}`}
             icon={<AccountBalanceWalletIcon sx={{ color: "white" }} />}
             color='info.main'
           />
@@ -78,14 +78,14 @@ const PortfolioStats = ({ stocks }) => {
         <Grid item xs={4}>
           <StatBox
             title='Current Value'
-            value={`$${currentPortfolioValue.toFixed(2)}`}
+            value={`$${currentPortfolioValue.toFixed(0).toLocaleString('de-DE')}`}
             icon={<AccountBalanceIcon sx={{ color: "white" }} />}
-            color="#123456"
+            color='#123456'
           />
         </Grid>
         <Grid item xs={4}>
           <StatBox
-            title={gainLoss >= 0 ? "Your Total Profit" : "Your Total Loss"}
+            title={gainLoss >= 0 ? "Total Profit" : "Total Loss"}
             value={`${gainLoss >= 0 ? "+" : ""}${percentageGainLoss}%`}
             icon={
               gainLoss >= 0 ? (
