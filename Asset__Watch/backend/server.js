@@ -65,5 +65,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Fixed bug with the Calendar Dates when adding stocks to portfolio"
+// git  commit -m"Fixing small bags and issues"
 // git push

@@ -42,7 +42,7 @@ export const _login = async (req, res) => {
       const accessToken = jwt.sign(
         { id: user.id, email: user.email }, // Consistent payload keys
         process.env.JWT_ACCESS_SECRET,
-        { expiresIn: "15m" }
+        { expiresIn: "3h" }
       );
 
       // Check if the user's profile is complete and if they have a portfolio

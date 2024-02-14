@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  checkAuthState,
   fetchUserProfile,
   selectIsAuthenticated,
   selectCurrentUser,
@@ -18,20 +17,13 @@ import { CustomThemeProvider } from "./themeContext";
 import Footer from "./pages/Footer";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import "./App.css";
+import PublicRoute from "./components/PublicRoute";
 
 function App() {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const currentUser = useSelector(selectCurrentUser);
   const location = useLocation();
-  const [authChecked, setAuthChecked] = useState(false);
-
-  useEffect(() => {
-    // Immediately check authentication state on app load
-    dispatch(checkAuthState()).finally(() => {
-      setAuthChecked(true); // Set true once the auth state check is complete
-    });
-  }, [dispatch]);
 
   useEffect(() => {
     if (isAuthenticated && currentUser?.id) {
@@ -39,10 +31,6 @@ function App() {
       dispatch(fetchUserProfile(currentUser.id));
     }
   }, [dispatch, isAuthenticated, currentUser?.id]);
-
-  if (!authChecked) {
-    return <div>Loading...</div>; // Optionally show a loading spinner here
-  }
 
   return (
     <CustomThemeProvider>
@@ -52,8 +40,22 @@ function App() {
           <CSSTransition key={location.key} classNames='fade' timeout={300}>
             <Routes location={location}>
               <Route path='/home' element={<HomePage />} />
-              <Route path='/login' element={<LoginPage />} />
-              <Route path='/register' element={<RegisterPage />} />
+              <Route
+                path='/login'
+                element={
+                  <PublicRoute>
+                    <LoginPage />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path='/register'
+                element={
+                  <PublicRoute>
+                    <RegisterPage />
+                  </PublicRoute>
+                }
+              />
               <Route path='/profile' element={<ProfilePage />} />
               <Route path='/dashboard' element={<DashboardPage />} />
               <Route path='/purchases' element={<PurchasesList />} />

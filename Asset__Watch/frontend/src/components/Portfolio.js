@@ -29,7 +29,9 @@ const Portfolio = ({ stocks }) => {
       {stocks.map((stock, index) => (
         <PortfolioListItem key={stock.id || `stock-${index}`} stock={stock} />
       ))}
-      <CustomButton onClick={goToPurchaseHistory}>View Your Purchase History</CustomButton>
+      <CustomButton sx={{ mt: 5 }} onClick={goToPurchaseHistory}>
+        View Your Purchase History
+      </CustomButton>
     </>
   );
 };

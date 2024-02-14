@@ -1,27 +1,58 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+// import { useSelector } from "react-redux";
 import { loginUser } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Container, Box, TextField, Typography, Alert, Grid, Paper } from "@mui/material";
-import CustomButton from '../components/CustomButton';
+import CustomButton from "../components/CustomButton";
 
 function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const authStatus = useSelector((state) => state.auth.status);
-  const authError = useSelector((state) => state.auth.error);
+  // const authError = useSelector((state) => state.auth.error);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const validateInputs = () => {
+    if (!email && !password) {
+      setErrorMessage("Email and password are required");
+      return false;
+    } else if (!email) {
+      setErrorMessage("Email is required");
+      return false;
+    } else if (!password) {
+      setErrorMessage("Password is required");
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Clear previous error messages
+    setErrorMessage("");
+
+    if (!validateInputs()) return; // Stop form submission if validation fails
+
     dispatch(loginUser({ email, password }))
       .unwrap()
       .then(() => {
-        navigate("/dashboard"); // Always redirect to Dashboard after successful login
+        navigate("/dashboard"); // Navigate to Dashboard on successful login
       })
-      .catch((error) => console.error("Login failed:", error));
+      .catch((error) => {
+        // Handle specific error messages or generic ones based on the error response
+        // Detailed logging for debugging
+        console.error("Login failed:", error);
+        console.log("Error object:", error);
+        console.log("Error response:", error.response);
+        console.log("Error response data:", error.response?.data);
+
+        // Extracting specific error message
+        const errorResponse = error?.msg || "Login failed. Please try again.";
+        setErrorMessage(errorResponse);
+      });
   };
 
   return (
@@ -36,13 +67,13 @@ function LoginPage() {
         </Typography>
       </Box>
 
-      {/* Login Form */}
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <Typography component='h1' variant='h5'>
           Login Page
         </Typography>
-        {authStatus === "failed" && <Alert severity='error'>{authError}</Alert>}
+
         <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          {errorMessage && <Alert severity='error'>{errorMessage}</Alert>}
           <TextField
             variant='outlined'
             margin='normal'
@@ -80,7 +111,6 @@ function LoginPage() {
           </CustomButton>
         </Box>
       </Box>
-
       {/* Features Overview */}
       <Grid container spacing={4} sx={{ my: 2, mb: 7 }}>
         <Grid item xs={12} md={4}>
@@ -111,6 +141,13 @@ function LoginPage() {
 }
 
 export default LoginPage;
+
+// import { useSelector } from "react-redux";
+// const authStatus = useSelector((state) => state.auth.status);
+// const authError = useSelector((state) => state.auth.error);
+{
+  /* {authStatus === "failed" && <Alert severity='error'>{authError}</Alert>} */
+}
 
 // // src/pages/LoginPage.js
 

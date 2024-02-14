@@ -38,7 +38,7 @@ const NavBar = () => {
   };
 
   const pages = isAuthenticated ? [] : ["Home", "Login", "Register"];
-  const settings = ["Home", "Profile", "Dashboard", "Logout"];
+  const settings = ["Home", "Dashboard","Purchases", "Profile", "Logout"];
 
   return (
     <AppBar
