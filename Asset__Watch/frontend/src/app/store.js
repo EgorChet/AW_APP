@@ -24,12 +24,11 @@ const rootReducer = combineReducers({
   portfolio: portfolioReducer,
 });
 
-
 // Configuration for redux-persist
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  whitelist: ['auth', 'portfolio'], // Add any state slice here you wish to persist
+  whitelist: ["auth", "portfolio"], // Add any state slice here you wish to persist
 };
 
 // Create a persisted reducer
@@ -37,15 +36,15 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-
 });
 
 store.subscribe(() => {
   const state = store.getState();
-  console.log("State after rehydration:", state);
-  console.log("Auth state:", state.auth);
-  console.log("Portfolio state:", state.portfolio);
-  console.log("Persist state:", state._persist);
+  console.log(state);
+  // console.log("State after rehydration:", state);
+  // console.log("Auth state:", state.auth);
+  // console.log("Portfolio state:", state.portfolio);
+  // console.log("Persist state:", state._persist);
 });
 
 export const persistor = persistStore(store);

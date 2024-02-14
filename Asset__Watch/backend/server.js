@@ -65,5 +65,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Fixing small bags and issues"
+// git  commit -m"Portfolio Adaptation for Mobile Devices"
 // git push

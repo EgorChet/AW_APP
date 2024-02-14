@@ -11,7 +11,7 @@ import CustomButton from "./CustomButton";
 const ProfileDetails = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
-  const [avatar, setAvatar] = useState(`https://robohash.org/${user?.gender}?set=set5`);
+  const [avatar, setAvatar] = useState("");
   const [selectedQuote, setSelectedQuote] = useState({ quote: "", author: "" }); // Updated to store both
   // Define the array of quotes
   const quotes = [
@@ -149,6 +149,31 @@ const ProfileDetails = () => {
     setSelectedQuote(quotes[randomIndex]); // Update to set the entire quote object
   }, []);
 
+  // Define a function to generate the avatar URL
+  const generateAvatarUrl = (seed) => `https://robohash.org/${seed}?set=set5`;
+
+  // Setup initial avatar based on gender
+  useEffect(() => {
+    if (user?.gender) {
+      const genderSeed = user.gender === "male" ? "bierd" : "long hair";
+      setAvatar(generateAvatarUrl(`${genderSeed}${Math.random()}`));
+    } else {
+      // If gender is not known, generate a random avatar
+      setAvatar(generateAvatarUrl(`${Math.random()}`));
+    }
+  }, [user?.gender]); // This will re-run if the user's gender changes
+
+  // Update handleAvatarShuffle to use gender-specific logic
+  const handleAvatarShuffle = () => {
+    if (user?.gender) {
+      const genderSeed = user.gender === "male" ? "boy" : "girl";
+      setAvatar(generateAvatarUrl(`${genderSeed}${Date.now()}`)); // Using Date.now() for uniqueness
+    } else {
+      // Shuffle without gender-specific seed if gender is unknown
+      setAvatar(generateAvatarUrl(`${Date.now()}`));
+    }
+  };
+
   if (!user) {
     return (
       <Typography component='h6' variant='h6' sx={{ mt: 2 }}>
@@ -156,10 +181,6 @@ const ProfileDetails = () => {
       </Typography>
     );
   }
-
-  const handleAvatarShuffle = () => {
-    setAvatar(`https://robohash.org/$${Math.random()}?set=set5`);
-  };
 
   return (
     <Grid container spacing={4}>
@@ -193,7 +214,6 @@ const ProfileDetails = () => {
                 sx={{ width: 200, height: 200, mb: 2, mr: 5 }}
               />
             </Box>
-
             <IconButton onClick={handleAvatarShuffle} sx={{ mb: 2 }}>
               <FontAwesomeIcon icon={faRedoAlt} size='sm' />
             </IconButton>
