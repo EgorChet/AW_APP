@@ -64,6 +64,6 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
 });
 
-// git add .
-// git  commit -m"Portfolio Adaptation for Mobile Devices"
-// git push
+git add .
+git  commit -m"Portfolio Adaptation for Mobile Devices company name fix"
+git push

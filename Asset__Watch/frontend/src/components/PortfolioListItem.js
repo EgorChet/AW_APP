@@ -70,7 +70,7 @@ const PortfolioListItem = ({ stock }) => {
                   whiteSpace: "nowrap",
                 }}
               >
-                {stock.stock_symbol} - {stock.company_name}
+                {stock.stock_symbol} {/* {stock.stock_symbol} - {stock.company_name} */}
               </Typography>
             </MobileTextDisplay>
           ) : (
