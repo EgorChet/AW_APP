@@ -65,5 +65,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Portfolio Adaptation for Mobile Devices company name fix"
+// git  commit -m"Portfolio Adaptation for Mobile Devices company name fix v3"
 // git push
