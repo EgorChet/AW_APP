@@ -55,7 +55,7 @@ const NavBar = () => {
       <AppBar position="static" sx={{ background: "linear-gradient(45deg, #796f6d 30%, #2f4d65 90%)", padding: "10px 0" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters sx={{ justifyContent: "space-between", flexDirection: isMobile ? "column" : "row" }}>
-            <Logo style={{ height: "80px", cursor: "pointer" }} alt="Asset Watch" onClick={() => navigate("/")} />
+            <Logo style={{ justifyContent: "flexstart", height: "80px", cursor: "pointer" }} alt="Asset Watch" onClick={() => navigate("/")} />
             {!isMobile && (
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 {navigationItems.map((item, index) => (

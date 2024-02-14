@@ -89,21 +89,45 @@ const PortfolioListItem = ({ stock }) => {
           )}
         </Grid>
         {/* Repeat for other details */}
-        <Grid item xs={12} md={2} sx={{ textAlign: isMobile ? "left" : "center" }}>
+        <Grid item xs={12} md={1.5} sx={{ textAlign: isMobile ? "left" : "center" }}>
           <Typography sx={detailLabelStyle}>Number Of Shares</Typography>
           <Typography sx={detailValueStyle}>{stock.numberofshares}</Typography>
         </Grid>
-        {/* Continue for Avg Price, Current Price, and Profit/Loss with similar structure */}
-        <Grid item xs={12} md={2} sx={{ textAlign: isMobile ? "left" : "center" }}>
+        <Grid item xs={12} md={1.5} sx={{ textAlign: isMobile ? "left" : "center" }}>
+          <Typography sx={detailLabelStyle}>Current Value</Typography>
+          <Typography sx={detailValueStyle}>
+            ${(stock.current_price * stock.numberofshares).toFixed(0)}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={1.5} sx={{ textAlign: isMobile ? "left" : "center" }}>
           <Typography sx={detailLabelStyle}>Avg Price</Typography>
           <Typography sx={detailValueStyle}>{stock.average_price}</Typography>
         </Grid>
-        <Grid item xs={12} md={2} sx={{ textAlign: isMobile ? "left" : "center" }}>
+        <Grid item xs={12} md={1.5} sx={{ textAlign: isMobile ? "left" : "center" }}>
           <Typography sx={detailLabelStyle}>Current Price</Typography>
           <Typography sx={detailValueStyle}>{stock.current_price}</Typography>
         </Grid>
-        <Grid item xs={12} md={2} sx={{ textAlign: isMobile ? "left" : "center" }}>
-          <Typography sx={detailLabelStyle}>Profit/Loss</Typography>
+        <Grid item xs={12} md={1.5} sx={{ textAlign: isMobile ? "left" : "center" }}>
+          <Typography sx={detailLabelStyle}>
+            {stock.current_gains_percentage >= 0 ? "Profit $" : "Loss $"}
+          </Typography>
+          <Typography
+            sx={{
+              ...detailValueStyle,
+              color: stock.current_gains_percentage >= 0 ? "green" : "red",
+            }}
+          >
+            $
+            {(
+              stock.average_price * stock.numberofshares -
+              stock.current_price * stock.numberofshares
+            ).toFixed(0)}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={1.5} sx={{ textAlign: isMobile ? "left" : "center" }}>
+          <Typography sx={detailLabelStyle}>
+            {stock.current_gains_percentage >= 0 ? "Profit %" : "Loss %"}
+          </Typography>
           <Typography sx={{ ...detailValueStyle, color: gainsColor }}>
             {isGain ? <TrendingUpIcon /> : <TrendingDownIcon />}
             {`${isGain ? "+" : ""}${formattedPercentage}%`}

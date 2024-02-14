@@ -65,5 +65,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Portfolio Adaptation for Mobile Devices company name fix v5"
+// git  commit -m"Integrated the search component conected to News API"
 // git push
