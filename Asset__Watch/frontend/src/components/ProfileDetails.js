@@ -274,7 +274,11 @@ const ProfileDetails = () => {
               <FontAwesomeIcon icon={faLinkedinIn} size='lg' />
             </IconButton>
           </Box>
-          <CustomButton variant='contained' onClick={() => setProfileModalOpen(true)}>
+          <CustomButton
+            sx={{ mb: 2 }}
+            variant='contained'
+            onClick={() => setProfileModalOpen(true)}
+          >
             Update Profile
           </CustomButton>
 
