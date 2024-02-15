@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import { debounce } from "lodash"; // Import debounce
 
 const WatchList = () => {
   const [watchList, setWatchList] = useState([]);
@@ -35,6 +36,34 @@ const WatchList = () => {
     (currentPage + 1) * itemsPerPage
   );
   const [expandedItems, setExpandedItems] = useState({});
+
+  // Debounced search handler
+  const debouncedSearch = debounce((query) => {
+    if (query) {
+      setLoading(true);
+      axios
+        .get(
+          `https://cloud.iexapis.com/stable/ref-data/symbols?token=${process.env.REACT_APP_IEX_API_TOKEN}`
+        )
+        .then((response) => {
+          const companies = response.data.filter((company) =>
+            company.name.toLowerCase().includes(query.toLowerCase())
+          );
+          setAutocompleteOptions(companies);
+        })
+        .catch((error) => console.error("Failed to search companies:", error))
+        .finally(() => setLoading(false));
+    } else {
+      setAutocompleteOptions([]);
+    }
+  }, 300); // Adjust debounce time as needed
+
+  useEffect(() => {
+    // Call debounced search function
+    debouncedSearch(searchQuery);
+    // Cleanup function to cancel debounced calls on component unmount
+    return () => debouncedSearch.cancel();
+  }, [searchQuery]);
 
   const toggleItemExpansion = (symbol) => {
     setExpandedItems((prevState) => ({
@@ -136,29 +165,33 @@ const WatchList = () => {
     fetchWatchList();
   }, [userId]); // Dependency array includes userId to refetch if userId changes
 
-  const handleAddToWatchList = (company) => {
-    // Assuming an endpoint like this exists in your API or using the IEX API directly
+  const handleAddToWatchList = async (company) => {
+    const isSymbolInWatchlist = watchList.some((item) => item.symbol === company.symbol);
+
+    if (isSymbolInWatchlist) {
+      alert(`Symbol ${company.symbol} is already in your watchlist.`);
+      return; // Exit the function to prevent adding the symbol again
+    }
+
+    // If the symbol is not in the watchlist, proceed to add it
     const url = `https://cloud.iexapis.com/stable/stock/${company.symbol}/quote?token=${process.env.REACT_APP_IEX_API_TOKEN}`;
 
-    axios
-      .get(url)
-      .then((quoteResponse) => {
-        const { companyName, latestPrice, changePercent } = quoteResponse.data;
-        const companyWithAdditionalData = {
-          ...company,
-          latestPrice,
-          changePercent,
-          companyName,
-        };
+    try {
+      const quoteResponse = await axios.get(url);
+      const { companyName, latestPrice, changePercent } = quoteResponse.data;
+      const companyWithAdditionalData = {
+        ...company,
+        latestPrice,
+        changePercent,
+        companyName,
+      };
 
-        axiosInstance
-          .post(`/watchlist/`, { userId: userId, symbol: company.symbol })
-          .then(() => {
-            setWatchList([...watchList, companyWithAdditionalData]);
-          })
-          .catch((error) => console.error("Failed to add to watchlist:", error));
-      })
-      .catch((error) => console.error("Failed to fetch company data:", error));
+      // Assuming you have an endpoint to add a symbol to the watchlist
+      await axiosInstance.post(`/watchlist/`, { userId: userId, symbol: company.symbol });
+      setWatchList([...watchList, companyWithAdditionalData]);
+    } catch (error) {
+      console.error("Failed to add to watchlist or fetch company data:", error);
+    }
   };
 
   const handleRemoveFromWatchList = (symbol) => {

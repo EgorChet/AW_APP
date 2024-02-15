@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import {
   Box,
+  Alert,
   Typography,
   CircularProgress,
   Card,
@@ -49,6 +50,9 @@ const StockDetailsSection = ({
       <ArrowDownwardIcon style={{ color: theme.palette.error.main }} />
     );
   };
+
+  const isLocalhost =
+    window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
 
   if (loading) {
     return <CircularProgress />;
@@ -149,6 +153,12 @@ const StockDetailsSection = ({
       <Typography variant='h5' gutterBottom sx={{ textAlign: "center" }}>
         Latest News
       </Typography>
+      {!isLocalhost && (
+        <Alert severity='info' sx={{ my: 2 }}>
+          News feature is available only in the local development environment due to API
+          restrictions.
+        </Alert>
+      )}
       {newsArticles.map((article, index) => (
         <Card key={index} sx={{ mb: 2 }}>
           <CardActionArea component='a' href={article.url} target='_blank'>
