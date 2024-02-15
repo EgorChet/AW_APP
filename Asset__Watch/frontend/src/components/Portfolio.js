@@ -7,10 +7,14 @@ import CustomButton from "./CustomButton";
 import { useNavigate } from "react-router-dom";
 import { useTheme, useMediaQuery } from "@mui/material";
 
+
+
 const Portfolio = ({ stocks }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  // console.log(stocks.filter(stock => !stock.stock_symbol));
 
   const goToPurchaseHistory = () => {
     navigate("/purchases");

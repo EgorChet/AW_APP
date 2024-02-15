@@ -70,7 +70,7 @@ const PortfolioListItem = ({ stock }) => {
                   whiteSpace: "nowrap",
                 }}
               >
-                {stock.stock_symbol} {/* {stock.stock_symbol} - {stock.company_name} */}
+                {stock.stock_symbol}
               </Typography>
             </MobileTextDisplay>
           ) : (
@@ -141,7 +141,7 @@ const PortfolioListItem = ({ stock }) => {
 PortfolioListItem.propTypes = {
   stock: PropTypes.shape({
     current_gains_percentage: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    stock_symbol: PropTypes.string.isRequired,
+    stock_symbol: PropTypes.string,
     company_name: PropTypes.string.isRequired,
     numberofshares: PropTypes.number.isRequired,
     average_price: PropTypes.number.isRequired,

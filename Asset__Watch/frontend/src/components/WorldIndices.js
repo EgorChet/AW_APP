@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Box, Typography, CircularProgress, Paper, useTheme } from "@mui/material";
 
-const indicesSymbols = ["SPY", "DIA", "USD", "AAPL", "SPY"];
+const indicesSymbols = ["SPY", "DIA", "USD", "AAPL", "INTC"];
 
 const WorldIndices = () => {
   const [indicesData, setIndicesData] = useState([]);

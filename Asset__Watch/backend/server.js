@@ -5,6 +5,7 @@ import express from "express";
 import dotenv from "dotenv";
 import usersRouter from "./routes/usersRoute.js";
 import stocksRouter from "./routes/stocksRoute.js";
+import watchListRouter from "./routes/watchListRoute.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -47,6 +48,8 @@ app.listen(port, () => {
 app.use("/users", usersRouter);
 // Use the portfolio routes
 app.use("/api", stocksRouter);
+// Use the watchlist routes
+app.use("/watchlist", watchListRouter);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -65,5 +68,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Integrated the search component conected to News API"
+// git  commit -m"Created the WatchList Component with the function to add delete and render futher details"
 // git push

@@ -3,7 +3,7 @@ import { Typography, Container, Box, Grid, Paper } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import WorldIndices from "../components/WorldIndices"; // Assuming WorldIndices is a component
 import SamplePortfolio from "../components/SamplePortfolio"; // Assuming you create a SamplePortfolio component
-import CustomButton from '../components/CustomButton';
+import CustomButton from "../components/CustomButton";
 
 function HomePage() {
   return (
@@ -17,7 +17,13 @@ function HomePage() {
           <Typography variant='h5'>
             Your one-stop solution for asset management and investment tracking.
           </Typography>
-          <CustomButton variant='contained' color='primary' sx={{ mt: 3 }} component={RouterLink} to="/register">
+          <CustomButton
+            variant='contained'
+            color='primary'
+            sx={{ mt: 3 }}
+            component={RouterLink}
+            to='/register'
+          >
             Get Started
           </CustomButton>
         </Box>
@@ -55,7 +61,7 @@ function HomePage() {
           {/* World Indices */}
           <Grid item xs={12} md={6}>
             <Typography variant='h4' gutterBottom sx={{ mb: 6 }}>
-              World Indices
+              Follow Your Watch List
             </Typography>
             <WorldIndices />
           </Grid>
@@ -63,7 +69,7 @@ function HomePage() {
           {/* Sample Portfolio */}
           <Grid item xs={12} md={6}>
             <Typography variant='h4' gutterBottom>
-              Sample Portfolio
+              Track Your Portfolio
             </Typography>
             <SamplePortfolio /> {/* Implement this component to display a sample portfolio */}
           </Grid>
@@ -72,7 +78,13 @@ function HomePage() {
         {/* Call to Action */}
         <Box sx={{ my: 4, textAlign: "center" }}>
           <Typography variant='h5'>Ready to take control of your investments?</Typography>
-          <CustomButton variant='contained' color='primary' sx={{ mt: 3 }} component={RouterLink} to="/register">
+          <CustomButton
+            variant='contained'
+            color='primary'
+            sx={{ mt: 3 }}
+            component={RouterLink}
+            to='/register'
+          >
             Sign Up Now
           </CustomButton>
         </Box>

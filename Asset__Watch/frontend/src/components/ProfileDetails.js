@@ -1,15 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUserProfile, updateProfile } from "../features/auth/authSlice";
+import ProfileUpdateModal from "./ProfileUpdateModal";
+// import { useNavigate } from "react-router-dom";
 import { Typography, Card, Box, Avatar, IconButton, Grid } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
-import WorldIndices from "./WorldIndices";
 import CustomButton from "./CustomButton";
+import WatchList from "./WatchList";
 
 const ProfileDetails = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [profile, setProfile] = useState({
+    email: "",
+    name: "",
+    surname: "",
+    age: "",
+    gender: "",
+    facebook: "",
+    instagram: "",
+    linkedin: "",
+  });
+  // const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
   const [avatar, setAvatar] = useState("");
   const [selectedQuote, setSelectedQuote] = useState({ quote: "", author: "" }); // Updated to store both
@@ -143,6 +157,31 @@ const ProfileDetails = () => {
     },
   ];
 
+  useEffect(() => {
+    // Initialize form with user data when available
+    if (user) {
+      setProfile({ ...user });
+    }
+  }, [user]);
+
+  const handleProfileChange = (e) => {
+    const { name, value } = e.target;
+    setProfile({ ...profile, [name]: value });
+  };
+
+  const handleProfileSave = async (e) => {
+    e.preventDefault();
+    try {
+      await dispatch(updateProfile({ ...profile, userId: user.id })).unwrap();
+      // Dispatch fetchUserProfile to refresh user data
+      dispatch(fetchUserProfile(user.id));
+      alert("Profile updated successfully!");
+      setProfileModalOpen(false);
+    } catch (error) {
+      alert(`Failed to update profile: ${error.message}`);
+    }
+  };
+
   // Select a random quote when the component mounts
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * quotes.length);
@@ -235,9 +274,17 @@ const ProfileDetails = () => {
               <FontAwesomeIcon icon={faLinkedinIn} size='lg' />
             </IconButton>
           </Box>
-          <CustomButton variant='contained' color='primary' onClick={() => navigate("/profile")}>
+          <CustomButton variant='contained' onClick={() => setProfileModalOpen(true)}>
             Update Profile
           </CustomButton>
+
+          <ProfileUpdateModal
+            open={profileModalOpen}
+            onClose={() => setProfileModalOpen(false)}
+            profile={profile}
+            onProfileChange={handleProfileChange}
+            onSave={handleProfileSave}
+          />
         </Card>
       </Grid>
       <Grid item xs={12} md={4}>
@@ -299,9 +346,9 @@ const ProfileDetails = () => {
             component='div'
             sx={{ textAlign: "center", fontWeight: "bold", mt: 4 }}
           >
-            World Indices:
+            Watch List:
           </Typography>
-          <WorldIndices />
+          <WatchList />
         </Card>
       </Grid>
     </Grid>

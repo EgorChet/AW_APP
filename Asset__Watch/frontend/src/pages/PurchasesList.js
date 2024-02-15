@@ -19,7 +19,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import axiosInstance from "../config/axiosConfig";
 import EditPurchaseModal from "../components/EditPurchaseModal";
 import { format } from "date-fns";
-import StockSearch from "../components/StockSearch";
 
 const PurchasesList = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -147,7 +146,6 @@ const PurchasesList = () => {
           onSave={handleEditSave}
         />
       )}
-      <StockSearch />
     </Container>
   );
 };
