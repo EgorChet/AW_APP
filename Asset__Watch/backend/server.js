@@ -68,5 +68,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Created the WatchList Component with the function to add delete and render futher details V6"
+// git  commit -m"Created the WatchList Component with the function to add delete and render futher details V7"
 // git push

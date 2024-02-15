@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { selectCurrentUser } from '../features/auth/authSlice';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../features/auth/authSlice";
 import {
   Box,
   TextField,
@@ -12,15 +12,15 @@ import {
   Typography,
   CircularProgress,
   Grid,
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import debounce from 'lodash/debounce';
-import axiosInstance from '../config/axiosConfig';
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import debounce from "lodash/debounce";
+import axiosInstance from "../config/axiosConfig";
 
 const WatchList = () => {
   const [watchList, setWatchList] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [autocompleteOptions, setAutocompleteOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const currentUser = useSelector(selectCurrentUser);
@@ -52,7 +52,7 @@ const WatchList = () => {
     <IconButton
       key={index}
       onClick={() => handlePageChange(null, index)}
-      color={currentPage === index ? 'primary' : 'default'}
+      color={currentPage === index ? "primary" : "default"}
     >
       <FiberManualRecordIcon />
     </IconButton>
@@ -63,8 +63,12 @@ const WatchList = () => {
     if (!searchText) return;
     setLoading(true);
     try {
-      const response = await axios.get(`https://cloud.iexapis.com/stable/ref-data/symbols?token=${process.env.REACT_APP_IEX_API_TOKEN}&filter=symbol,name`);
-      const filteredOptions = response.data.filter((option) => option.name.toLowerCase().includes(searchText.toLowerCase()));
+      const response = await axios.get(
+        `https://cloud.iexapis.com/stable/ref-data/symbols?token=${process.env.REACT_APP_IEX_API_TOKEN}&filter=symbol,name`
+      );
+      const filteredOptions = response.data.filter((option) =>
+        option.name.toLowerCase().includes(searchText.toLowerCase())
+      );
       setAutocompleteOptions(filteredOptions);
     } catch (error) {
       console.error("Error fetching companies:", error);
@@ -115,28 +119,41 @@ const WatchList = () => {
   }, [userId]);
 
   const handleAddToWatchList = (company) => {
-    // Assuming an endpoint like this exists in your API or using the IEX API directly
-    const url = `https://cloud.iexapis.com/stable/stock/${company.symbol}/quote?token=${process.env.REACT_APP_IEX_API_TOKEN}`;
+    // Assuming axiosInstance is set up to communicate with your backend
+    // and your backend endpoint for adding to the watchlist is '/watchlist/add'
+    axiosInstance
+      .post("/watchlist/", { userId: userId, symbol: company.symbol })
+      .then((response) => {
+        // Check the response from the backend
+        if (response.data.status === "success") {
+          // If the stock was successfully added to the backend watchlist,
+          // fetch its latest price, changePercent, etc., and update the frontend state
+          const url = `https://cloud.iexapis.com/stable/stock/${company.symbol}/quote?token=${process.env.REACT_APP_IEX_API_TOKEN}`;
+          axios
+            .get(url)
+            .then((quoteResponse) => {
+              const { companyName, latestPrice, changePercent } = quoteResponse.data;
+              const companyWithAdditionalData = {
+                ...company,
+                latestPrice,
+                changePercent,
+                companyName,
+              };
 
-    axios
-      .get(url)
-      .then((quoteResponse) => {
-        const { companyName, latestPrice, changePercent } = quoteResponse.data;
-        const companyWithAdditionalData = {
-          ...company,
-          latestPrice,
-          changePercent,
-          companyName,
-        };
-
-        axiosInstance
-          .post(`/watchlist/`, { userId: userId, symbol: company.symbol })
-          .then(() => {
-            setWatchList([...watchList, companyWithAdditionalData]);
-          })
-          .catch((error) => console.error("Failed to add to watchlist:", error));
+              // Update the watchList state with the new stock
+              setWatchList((currentWatchList) => [...currentWatchList, companyWithAdditionalData]);
+            })
+            .catch((error) => {
+              console.error("Failed to fetch company data:", error);
+            });
+        } else if (response.data.status === "duplicate") {
+          // If the backend indicates the stock is already in the watchlist, notify the user
+          alert("This stock is already in your watchlist.");
+        }
       })
-      .catch((error) => console.error("Failed to fetch company data:", error));
+      .catch((error) => {
+        console.error("Failed to add to watchlist:", error);
+      });
   };
 
   const handleRemoveFromWatchList = (symbol) => {
@@ -163,12 +180,12 @@ const WatchList = () => {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Search for a company"
+            label='Search for a company'
             InputProps={{
               ...params.InputProps,
               endAdornment: (
                 <React.Fragment>
-                  {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                  {loading ? <CircularProgress color='inherit' size={20} /> : null}
                   {params.InputProps.endAdornment}
                 </React.Fragment>
               ),
@@ -195,7 +212,7 @@ const WatchList = () => {
             }}
             onClick={() => handleNavigateToDetails(item.symbol)}
           >
-            <Grid container alignItems="center" justifyContent="space-between" spacing={2}>
+            <Grid container alignItems='center' justifyContent='space-between' spacing={2}>
               <Grid item xs onClick={() => toggleItemExpansion(item.symbol)}>
                 <Typography
                   sx={{
@@ -239,8 +256,6 @@ const WatchList = () => {
 };
 
 export default WatchList;
-
-
 
 // import React, { useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
