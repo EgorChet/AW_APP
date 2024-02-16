@@ -65,7 +65,7 @@ const DashboardHeader = () => {
       >
         Welcome to your dashboard, {currentUser?.name || "Guest"}
       </Typography>
-      {profile.name === "Please update" && (
+      {profile.name === "please update" && (
         <CustomButton
           variant='contained'
           color='primary'
