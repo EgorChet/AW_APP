@@ -69,17 +69,28 @@ export const _register = async (req, res) => {
   const { email, password } = req.body;
   const loweremail = email.toLowerCase();
   const salt = bcrypt.genSaltSync(10);
-  const hashpass = bcrypt.hashSync(password + "", salt); // password +"" || password.toString()
+  const hashpass = bcrypt.hashSync(password + "", salt); // Ensure password is a string
 
   try {
     const row = await register(loweremail, hashpass);
-    res.json(row);
-    // res.status(201).json({ message: "User registered successfully", user: row });
+    // It's better to set the status before sending the response.
+    // Also, ensure not to call res.json() multiple times.
+    res.status(201).json({ message: "User registered successfully", user: row });
   } catch (error) {
-    console.log("register=>", error);
-    res.status(404).json({ msg: "email already exist" });
+    console.log("register error=>", error);
+
+    // Check the specific error code or type depending on your database and ORM/Query builder
+    // For example, if using PostgreSQL with Knex, a unique violation has the code '23505'
+    // Adjust the condition based on the error structure and database you are using
+    if (error.code === '23505' || error.message.includes("unique constraint")) {
+      res.status(409).json({ message: "Email already exists." });
+    } else {
+      // Handle other errors more generically
+      res.status(500).json({ message: "An error occurred during registration." });
+    }
   }
 };
+
 
 export const _all = async (req, res) => {
   try {

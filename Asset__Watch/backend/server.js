@@ -1,4 +1,4 @@
-// server.js 
+// server.js
 
 import cors from "cors";
 import express from "express";
@@ -68,5 +68,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Fixing the issue with news API in production"
+// git  commit -m"Fixing the issue with the login and register errors"
 // git push

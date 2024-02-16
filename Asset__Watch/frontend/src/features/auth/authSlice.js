@@ -12,8 +12,7 @@ export const registerUser = createAsyncThunk(
       // Assuming successful registration doesn't automatically log the user in
       return response.data; // You might adjust this based on your backend response
     } catch (error) {
-      // return rejectWithValue(error.response.data);
-      return rejectWithValue({ msg: "An unexpected error occurred" });
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -126,7 +125,9 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload.msg;
+        // Ensure we're checking for action.payload.message first,
+        // as action.payload might be structured differently based on the error.
+        state.error = action.payload?.message || "Unknown error occurred.";
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
