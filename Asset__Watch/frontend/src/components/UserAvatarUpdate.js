@@ -11,7 +11,7 @@ const UserAvatarUpdate = ({ onClose }) => {
   const [selectedAvatar, setSelectedAvatar] = useState(user?.avatar_url || "");
 
   const avatars = Array.from(
-    { length: 36 },
+    { length: 16 },
     (_, index) => `https://robohash.org/${index}?set=set5`
   );
 
@@ -40,8 +40,8 @@ const UserAvatarUpdate = ({ onClose }) => {
               src={url}
               alt={`Avatar ${index}`}
               sx={{
-                width: 66,
-                height: 66,
+                width: 56,
+                height: 56,
                 cursor: "pointer",
                 border: selectedAvatar === url ? "2px solid blue" : "none",
               }}
