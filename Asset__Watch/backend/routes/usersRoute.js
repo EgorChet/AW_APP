@@ -7,6 +7,7 @@ import {
   _refreshToken,
   updateProfile,
   fetchUserProfile,
+  updateAvatar,
 } from "../controllers/usersController.js";
 import { verifytoken } from "../middlewares/verifyToken.js";
 
@@ -24,5 +25,6 @@ usersRouter.post("/logout", _logout);
 
 usersRouter.post("/updateProfile", verifytoken, updateProfile);
 usersRouter.get("/profile/:userId", verifytoken, fetchUserProfile);
+usersRouter.post("/updateAvatar/:userId", verifytoken, updateAvatar);
 
 export default usersRouter;

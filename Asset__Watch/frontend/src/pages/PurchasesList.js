@@ -19,6 +19,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import axiosInstance from "../config/axiosConfig";
 import EditPurchaseModal from "../components/EditPurchaseModal";
 import { format } from "date-fns";
+import UserAvatarUpdate from "../components/UserAvatarUpdate";
 
 const PurchasesList = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -100,6 +101,7 @@ const PurchasesList = () => {
       <Typography variant='h5' gutterBottom>
         Your Purchase History {currentUser.name}
       </Typography>
+      <UserAvatarUpdate/>
       <Paper elevation={3} sx={{ p: 2, my: 2 }}>
         <List>
           {purchases.map((purchase) => (

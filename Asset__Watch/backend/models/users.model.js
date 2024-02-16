@@ -92,3 +92,19 @@ export const isUserProfileComplete = async (userId) => {
 export const getUserProfile = async (userId) => {
   return db("users").where({ id: userId }).first();
 };
+
+// Function to update a user's avatar URL
+export const updateAvatarUrl = async (userId, avatarUrl) => {
+  try {
+    const updatedUser = await db("users")
+      .where({ id: userId }) // Matching the user by ID
+      .update({ avatar_url: avatarUrl }, ["id", "avatar_url"]) // Update avatar_url, return 'id' and 'avatar_url'
+      .then((rows) => rows[0]); // Assuming 'id' is unique, there should be only one row returned
+
+    console.log("Avatar update result:", updatedUser);
+    return updatedUser;
+  } catch (error) {
+    console.error("updateAvatarUrl=>", error.message);
+    throw error;
+  }
+};

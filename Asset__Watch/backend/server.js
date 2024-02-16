@@ -68,5 +68,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Fixing the issue with the login and register errors and the Dashboard issues"
+// git  commit -m"Changed the logic for the Avatar now the users can choose and save their desired avatar"
 // git push

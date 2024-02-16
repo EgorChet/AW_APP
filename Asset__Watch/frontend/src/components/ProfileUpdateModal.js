@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Dialog,
-  DialogTitle,
   DialogContent,
   TextField,
   DialogActions,
@@ -14,7 +13,6 @@ import PropTypes from "prop-types";
 const ProfileUpdateModal = ({ open, onClose, profile, onProfileChange, onSave }) => {
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth='sm'>
-      <DialogTitle>Update Profile</DialogTitle>
       <form onSubmit={onSave}>
         <DialogContent>
           <Grid container spacing={2}>

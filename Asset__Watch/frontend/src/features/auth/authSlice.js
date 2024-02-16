@@ -95,6 +95,23 @@ export const fetchUserProfile = createAsyncThunk(
   }
 );
 
+// Action for updating avatar URL
+export const updateAvatarAction = createAsyncThunk(
+  "auth/updateAvatar",
+  async ({ avatarUrl }, { getState, rejectWithValue }) => {
+    try {
+      const { user } = getState().auth; // Get the user's ID from the state, if stored there
+      // Make sure to adjust the endpoint according to your API's route
+      const response = await axiosInstance.post(`/users/updateAvatar/${user.id}`, { avatarUrl });
+      // Assuming the backend returns the updated user object, you can directly return this data
+      return response.data;
+    } catch (error) {
+      // Use error.response.data to access the server's response
+      return rejectWithValue(error.response.data.message || "Could not update avatar");
+    }
+  }
+);
+
 const initialState = {
   user: null,
   accessToken: null,
@@ -160,6 +177,18 @@ const authSlice = createSlice({
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
         // Update user info in state
         state.user = action.payload;
+      })
+      // Handle pending state if needed
+      .addCase(updateAvatarAction.fulfilled, (state, action) => {
+        // Assuming the updated user data is returned by the API
+        // and that you store user data in state.auth.user
+        state.user.avatarUrl = action.payload.avatarUrl;
+        // Add any additional state updates here
+      })
+      // Handle rejected state if needed
+      .addCase(updateAvatarAction.rejected, (state, action) => {
+        // Handle the error, maybe set an error message in the state
+        state.error = action.payload;
       });
   },
 });

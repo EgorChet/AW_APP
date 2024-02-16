@@ -5,6 +5,7 @@ import {
   updateUserProfile,
   isUserProfileComplete,
   getUserProfile,
+  updateAvatarUrl
 } from "../models/users.model.js";
 import { getUserStocks } from "../models/stocks.model.js";
 import bcrypt from "bcrypt";
@@ -140,5 +141,35 @@ export const updateProfile = async (req, res) => {
   } catch (error) {
     console.error("updateProfile=>", error);
     res.status(500).json({ msg: "Error updating profile" });
+  }
+};
+
+// Controller function to handle avatar URL updates
+export const updateAvatar = async (req, res) => {
+  const { userId } = req.params; // Assuming you're passing userId in the URL
+  const { avatarUrl } = req.body; // The new avatar URL should be part of the request body
+
+  // Basic validation (You can expand this according to your needs)
+  if (!userId || !avatarUrl) {
+    return res.status(400).json({ message: 'Missing userId or avatarUrl in request.' });
+  }
+
+  try {
+    // Call the model function with the userId and avatarUrl
+    const updatedUser = await updateAvatarUrl(userId, avatarUrl);
+
+    if (updatedUser) {
+      // If the user was updated successfully, return the updated user data
+      return res.status(200).json({
+        message: 'Avatar updated successfully.',
+        user: updatedUser,
+      });
+    } else {
+      // If the user was not found or not updated for some reason
+      return res.status(404).json({ message: 'User not found.' });
+    }
+  } catch (error) {
+    console.error('Error updating avatar:', error);
+    return res.status(500).json({ message: 'Internal server error.' });
   }
 };

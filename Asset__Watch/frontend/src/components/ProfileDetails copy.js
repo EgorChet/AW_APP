@@ -3,23 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchUserProfile, updateProfile } from "../features/auth/authSlice";
 import ProfileUpdateModal from "./ProfileUpdateModal";
 // import { useNavigate } from "react-router-dom";
-import {
-  Typography,
-  Avatar,
-  Card,
-  Box,
-  Grid,
-  IconButton,
-  Modal,
-  Backdrop,
-  Fade,
-} from "@mui/material";
+import { Typography, Card, Box, Avatar, IconButton, Grid } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons"; // Use faEdit for the edit icon
+import { faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 import CustomButton from "./CustomButton";
 import WatchList from "./WatchList";
-import UserAvatarUpdate from "./UserAvatarUpdate";
 
 const ProfileDetails = () => {
   const dispatch = useDispatch();
@@ -34,11 +23,9 @@ const ProfileDetails = () => {
     instagram: "",
     linkedin: "",
   });
-
-  const [avatarModalOpen, setAvatarModalOpen] = useState(false); // State to manage avatar modal visibility
-
   // const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
+  const [avatar, setAvatar] = useState("");
   const [selectedQuote, setSelectedQuote] = useState({ quote: "", author: "" }); // Updated to store both
   // Define the array of quotes
   const quotes = [
@@ -169,16 +156,6 @@ const ProfileDetails = () => {
         "The whole secret to winning big in the stock market is not to be right all the time, but to lose the least amount possible when you’re wrong.",
     },
   ];
-  const modalStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    p: 4,
-  };
 
   useEffect(() => {
     // Initialize form with user data when available
@@ -210,6 +187,31 @@ const ProfileDetails = () => {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     setSelectedQuote(quotes[randomIndex]); // Update to set the entire quote object
   }, []);
+
+  // Define a function to generate the avatar URL
+  const generateAvatarUrl = (seed) => `https://robohash.org/${seed}?set=set5`;
+
+  // Setup initial avatar based on gender
+  useEffect(() => {
+    if (user?.gender) {
+      const genderSeed = user.gender === "male" ? "bierd" : "long hair";
+      setAvatar(generateAvatarUrl(`${genderSeed}${Math.random()}`));
+    } else {
+      // If gender is not known, generate a random avatar
+      setAvatar(generateAvatarUrl(`${Math.random()}`));
+    }
+  }, [user?.gender]); // This will re-run if the user's gender changes
+
+  // Update handleAvatarShuffle to use gender-specific logic
+  const handleAvatarShuffle = () => {
+    if (user?.gender) {
+      const genderSeed = user.gender === "male" ? "boy" : "girl";
+      setAvatar(generateAvatarUrl(`${genderSeed}${Date.now()}`)); // Using Date.now() for uniqueness
+    } else {
+      // Shuffle without gender-specific seed if gender is unknown
+      setAvatar(generateAvatarUrl(`${Date.now()}`));
+    }
+  };
 
   if (!user) {
     return (
@@ -247,14 +249,13 @@ const ProfileDetails = () => {
             >
               <Avatar
                 alt='User Avatar'
-                src={user?.avatar_url || "https://robohash.org/default?set=set5"}
+                src={avatar}
                 sx={{ width: 200, height: 200, mb: 2, mr: 5 }}
               />
             </Box>
-            <IconButton onClick={() => setAvatarModalOpen(true)}>
-              <FontAwesomeIcon icon={faEdit} />
+            <IconButton onClick={handleAvatarShuffle} sx={{ mb: 2 }}>
+              <FontAwesomeIcon icon={faRedoAlt} size='sm' />
             </IconButton>
-
             <Typography variant='h5' sx={{ color: "text.primary", mb: 1 }}>
               {`${user.name ?? ""} ${user.surname ?? ""}`}
             </Typography>
@@ -288,22 +289,6 @@ const ProfileDetails = () => {
             onProfileChange={handleProfileChange}
             onSave={handleProfileSave}
           />
-          <Modal
-            aria-labelledby='transition-modal-title'
-            aria-describedby='transition-modal-description'
-            open={avatarModalOpen}
-            onClose={() => setAvatarModalOpen(false)}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{ timeout: 500 }}
-          >
-            <Fade in={avatarModalOpen}>
-              <Box sx={modalStyle}>
-                {" "}
-                <UserAvatarUpdate onClose={() => setAvatarModalOpen(false)} />
-              </Box>
-            </Fade>
-          </Modal>
         </Card>
       </Grid>
       <Grid item xs={12} md={4}>
