@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateAvatarAction, fetchUserProfile } from "../features/auth/authSlice"; // Make sure the path is correct
 import { Grid, Avatar, Box } from "@mui/material";
@@ -11,6 +11,11 @@ const UserAvatarUpdate = ({ onClose }) => {
   const [selectedAvatar, setSelectedAvatar] = useState(user?.avatar_url || "");
   // State to hold the number of avatars
   const [avatarCount, setAvatarCount] = useState(getAvatarCount());
+
+  // Function to determine the avatar count based on window width
+  function getAvatarCount() {
+    return window.innerWidth < 600 ? 15 : 36;
+  }
 
   // Handle window resize
   useEffect(() => {
