@@ -19,7 +19,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import axiosInstance from "../config/axiosConfig";
 import EditPurchaseModal from "../components/EditPurchaseModal";
 import { format } from "date-fns";
-import UserAvatarUpdate from "../components/UserAvatarUpdate";
 
 const PurchasesList = () => {
   const currentUser = useSelector(selectCurrentUser);

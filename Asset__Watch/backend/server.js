@@ -68,5 +68,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Changed the logic for the Avatar now the users can choose and save their desired avatar V2"
+// git  commit -m"Changed the logic for the Avatar now the users can choose and save their desired avatar V3"
 // git push
