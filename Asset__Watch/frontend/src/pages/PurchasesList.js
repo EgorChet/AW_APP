@@ -101,7 +101,6 @@ const PurchasesList = () => {
       <Typography variant='h5' gutterBottom>
         Your Purchase History {currentUser.name}
       </Typography>
-      <UserAvatarUpdate/>
       <Paper elevation={3} sx={{ p: 2, my: 2 }}>
         <List>
           {purchases.map((purchase) => (
