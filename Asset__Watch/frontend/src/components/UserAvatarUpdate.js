@@ -9,9 +9,22 @@ const UserAvatarUpdate = ({ onClose }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const [selectedAvatar, setSelectedAvatar] = useState(user?.avatar_url || "");
+  // State to hold the number of avatars
+  const [avatarCount, setAvatarCount] = useState(getAvatarCount());
 
+  // Handle window resize
+  useEffect(() => {
+    function handleResize() {
+      setAvatarCount(getAvatarCount());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Generate a list of avatar URLs
   const avatars = Array.from(
-    { length: 16 },
+    { length: avatarCount },
     (_, index) => `https://robohash.org/${index}?set=set5`
   );
 
