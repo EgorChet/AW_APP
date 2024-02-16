@@ -68,5 +68,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Changed the logic for the Avatar now the users can choose and save their desired avatar V7"
+// git  commit -m"Fixed the naming issue on first login"
 // git push

@@ -11,8 +11,10 @@ const DashboardHeader = () => {
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [profile, setProfile] = useState({
     email: "",
-    name: "Please update",
-    surname: "your profile",
+    name: "",
+    surname: "",
+    // name: "Please update",
+    // surname: "your profile",
     age: "",
     gender: "",
     facebook: "",
@@ -63,9 +65,9 @@ const DashboardHeader = () => {
         gutterBottom
         sx={{ textAlign: "center", mt: 10, fontSize: { xs: "1.5rem", sm: "2rem", md: "3rem" } }}
       >
-        Welcome to your dashboard, {currentUser?.name || "Guest"}
+        Welcome to your dashboard, {currentUser?.name || "please update your profile"}
       </Typography>
-      {profile.name === "please update" && (
+      {!currentUser?.name && (
         <CustomButton
           variant='contained'
           color='primary'

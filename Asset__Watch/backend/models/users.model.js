@@ -11,8 +11,8 @@ export const register = async (email, password) => {
         {
           email: email,
           password: password, // Ensure this password is hashed for security
-          name: "please update", // Default name
-          surname: "your profile", // Default surname
+          // name: "please update", // Default name
+          // surname: "your profile", // Default surname
         },
         ["id", "email"]
       );
