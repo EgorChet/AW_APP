@@ -1,5 +1,5 @@
-// server.js or index.js
-// Importing necessary modules
+// server.js 
+
 import cors from "cors";
 import express from "express";
 import dotenv from "dotenv";
@@ -68,5 +68,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Created the WatchList Component with the function to add delete and render futher details V7"
+// git  commit -m"Fixing the issue with news API in production"
 // git push

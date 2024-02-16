@@ -11,7 +11,6 @@ import {
   IconButton,
   Autocomplete,
   TextField,
-  Button,
   Grid,
   CardActionArea,
   CardMedia,
@@ -21,6 +20,7 @@ import {
   Avatar,
   useTheme,
 } from "@mui/material";
+import CustomButton from "./CustomButton";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -55,12 +55,24 @@ const StockDetailsSection = ({
     window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
 
   if (loading) {
-    return <CircularProgress />;
+    return (
+      <Container
+        sx={{
+          mt: 1.5,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Container>
+    );
   }
 
   return (
     <Container>
-      <Box sx={{ my: 4, display: "flex", justifyContent: "center" }}>
+      <Box sx={{ my: 10, display: "flex", justifyContent: "center" }}>
         <Autocomplete
           disablePortal
           options={allStocks}
@@ -71,15 +83,9 @@ const StockDetailsSection = ({
             <TextField {...params} label='Search for a stock' variant='outlined' />
           )}
         />
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={handleSearch}
-          startIcon={<SearchIcon />}
-          sx={{ ml: 1 }}
-        >
+        <CustomButton onClick={handleSearch} startIcon={<SearchIcon />} sx={{ ml: 1 }}>
           Search
-        </Button>
+        </CustomButton>
       </Box>
       {stockDetails && (
         <Box textAlign='center' my={4}>
@@ -183,9 +189,9 @@ const StockDetailsSection = ({
                 {article.content}
               </Typography>
             </Collapse>
-            <Button size='small' onClick={() => toggleExpanded(index)}>
+            <CustomButton size='small' onClick={() => toggleExpanded(index)}>
               {expandedIds[index] ? "Less" : "More"}
-            </Button>
+            </CustomButton>
           </CardContent>
         </Card>
       ))}

@@ -215,7 +215,7 @@ const ProfileDetails = () => {
 
   if (!user) {
     return (
-      <Typography component='h6' variant='h6' sx={{ mt: 2 }}>
+      <Typography variant='body1' sx={{ mt: 2 }}>
         Loading user information...
       </Typography>
     );
@@ -307,7 +307,7 @@ const ProfileDetails = () => {
         >
           <Box sx={{ p: 3, width: "70%" }}>
             <Typography
-              variant='h5'
+              variant='body1'
               gutterBottom
               component='div'
               sx={{ textAlign: "center", fontWeight: "bold" }}
@@ -326,7 +326,7 @@ const ProfileDetails = () => {
               }}
             >
               {selectedQuote.quote}
-              <Typography variant='h6' sx={{ color: "text.secondary", mb: 1 }}>
+              <Typography variant='body1' sx={{ color: "text.secondary", mb: 1 }}>
                 - {selectedQuote.author}
               </Typography>{" "}
               {/* Display the random quote */}
@@ -345,7 +345,7 @@ const ProfileDetails = () => {
           }}
         >
           <Typography
-            variant='h5'
+            variant='body1'
             gutterBottom
             component='div'
             sx={{ textAlign: "center", fontWeight: "bold", mt: 4 }}

@@ -18,7 +18,7 @@ const Footer = () => {
           {/* Logo on the left */}
           <Grid item xs={12} sm={4} md={3}>
             <Box display='flex' justifyContent={{ xs: "center", sm: "flex-start" }}>
-              <Link href='#'>
+              <Link href='/home'>
                 <Logo
                   style={{ height: "100px", maxWidth: "100%", margin: "0 auto" }}
                   alt='Asset Watch'

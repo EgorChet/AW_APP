@@ -2,8 +2,42 @@
 
 import { db } from "../config/db.js";
 
-export const register = (email, password) => {
-  return db("users").insert({ email, password }, ["id", "email"]); // "password"
+export const register = async (email, password) => {
+  try {
+    // Start a transaction to ensure both user creation and watchlist population are successful
+    const result = await db.transaction(async (trx) => {
+      // Inserting the user with default name and surname, and returning the new user's id and email
+      const user = await trx("users").insert(
+        {
+          email: email,
+          password: password, // Ensure this password is hashed for security
+          name: "Please update", // Default name
+          surname: "your profile", // Default surname
+        },
+        ["id", "email"]
+      );
+
+      const userId = user[0].id; // Assuming the first element contains the user data
+
+      // Define a default set of stock symbols for the watchlist
+      const defaultWatchlistSymbols = ["AAPL", "GOOGL", "MSFT", "AMZN", "TSLA"];
+
+      // Prepare watchlist entries for the new user
+      const watchlistEntries = defaultWatchlistSymbols.map((symbol) => ({
+        user_id: userId,
+        symbol: symbol,
+      }));
+
+      // Insert default watchlist entries for the new user
+      await trx("watchlist").insert(watchlistEntries);
+
+      return user; // Return the new user's data
+    });
+
+    return result; // Return the result of the transaction
+  } catch (error) {
+    throw error; // Propagate errors
+  }
 };
 
 export const login = (email) => {
@@ -56,5 +90,5 @@ export const isUserProfileComplete = async (userId) => {
 };
 
 export const getUserProfile = async (userId) => {
-  return db('users').where({ id: userId }).first();
+  return db("users").where({ id: userId }).first();
 };

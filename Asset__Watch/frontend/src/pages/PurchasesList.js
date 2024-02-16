@@ -82,7 +82,13 @@ const PurchasesList = () => {
   if (loading) {
     return (
       <Container
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}
+        sx={{
+          mt: 1.5,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
       >
         <CircularProgress />
       </Container>

@@ -69,7 +69,7 @@ const Dashboard = () => {
         Welcome to your dashboard, {currentUser.name || "dear user"}
       </Typography>
       <Typography
-        variant='h5'
+        variant='body1'
         sx={{ textAlign: "center", mb: 6, fontSize: { xs: "1rem", sm: "1.25rem", md: "1.5rem" } }}
       >
         Here you can explore your profile, manage your stock portfolio, and track major World
@@ -92,7 +92,7 @@ const Dashboard = () => {
           alignItems: "center",
         }}
       >
-        <Typography variant='h6' gutterBottom sx={{ fontWeight: "medium" }}>
+        <Typography variant='body1' gutterBottom sx={{ fontWeight: "medium" }}>
           Start Growing Your Portfolio!
         </Typography>
         <Typography variant='body1' sx={{ mb: 2 }}>
