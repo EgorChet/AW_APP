@@ -12,6 +12,7 @@ import Portfolio from "../components/Portfolio";
 import ProfileDetails from "../components/ProfileDetails";
 import AddStockForm from "../components/AddStocksForm";
 import CustomButton from "../components/CustomButton";
+import DashboardHeader from "../components/DashboardHeader";
 
 const Dashboard = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -61,20 +62,7 @@ const Dashboard = () => {
 
   return (
     <Container maxWidth='xl' sx={{ mt: 4 }}>
-      <Typography
-        variant='h2'
-        gutterBottom
-        sx={{ textAlign: "center", mt: 10, fontSize: { xs: "1.5rem", sm: "2rem", md: "3rem" } }}
-      >
-        Welcome to your dashboard, {currentUser.name || "dear user"}
-      </Typography>
-      <Typography
-        variant='body1'
-        sx={{ textAlign: "center", mb: 6, fontSize: { xs: "1rem", sm: "1.25rem", md: "1.5rem" } }}
-      >
-        Here you can explore your profile, manage your stock portfolio, and track major World
-        Indices
-      </Typography>
+      <DashboardHeader />
       <Grid container spacing={3} alignItems='stretch'>
         <Grid item xs={12}>
           <ProfileDetails user={currentUser} />

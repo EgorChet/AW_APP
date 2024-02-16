@@ -68,5 +68,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Fixing the issue with the login and register errors"
+// git  commit -m"Fixing the issue with the login and register errors and the Dashboard issues"
 // git push
