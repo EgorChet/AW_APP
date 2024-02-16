@@ -5,7 +5,7 @@ import {
   updateUserProfile,
   isUserProfileComplete,
   getUserProfile,
-  updateAvatarUrl
+  updateAvatarUrl,
 } from "../models/users.model.js";
 import { getUserStocks } from "../models/stocks.model.js";
 import bcrypt from "bcrypt";
@@ -83,7 +83,7 @@ export const _register = async (req, res) => {
     // Check the specific error code or type depending on your database and ORM/Query builder
     // For example, if using PostgreSQL with Knex, a unique violation has the code '23505'
     // Adjust the condition based on the error structure and database you are using
-    if (error.code === '23505' || error.message.includes("unique constraint")) {
+    if (error.code === "23505" || error.message.includes("unique constraint")) {
       res.status(409).json({ message: "Email already exists." });
     } else {
       // Handle other errors more generically
@@ -91,7 +91,6 @@ export const _register = async (req, res) => {
     }
   }
 };
-
 
 export const _all = async (req, res) => {
   try {
@@ -151,7 +150,7 @@ export const updateAvatar = async (req, res) => {
 
   // Basic validation (You can expand this according to your needs)
   if (!userId || !avatarUrl) {
-    return res.status(400).json({ message: 'Missing userId or avatarUrl in request.' });
+    return res.status(400).json({ message: "Missing userId or avatarUrl in request." });
   }
 
   try {
@@ -161,15 +160,15 @@ export const updateAvatar = async (req, res) => {
     if (updatedUser) {
       // If the user was updated successfully, return the updated user data
       return res.status(200).json({
-        message: 'Avatar updated successfully.',
+        message: "Avatar updated successfully.",
         user: updatedUser,
       });
     } else {
       // If the user was not found or not updated for some reason
-      return res.status(404).json({ message: 'User not found.' });
+      return res.status(404).json({ message: "User not found." });
     }
   } catch (error) {
-    console.error('Error updating avatar:', error);
-    return res.status(500).json({ message: 'Internal server error.' });
+    console.error("Error updating avatar:", error);
+    return res.status(500).json({ message: "Internal server error." });
   }
 };

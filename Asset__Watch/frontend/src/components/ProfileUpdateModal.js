@@ -1,14 +1,7 @@
 import React from "react";
-import {
-  Dialog,
-  DialogContent,
-  TextField,
-  DialogActions,
-  Button,
-  Grid,
-  MenuItem,
-} from "@mui/material";
+import { Dialog, DialogContent, TextField, DialogActions, Grid, MenuItem } from "@mui/material";
 import PropTypes from "prop-types";
+import CustomButton from "./CustomButton";
 
 const ProfileUpdateModal = ({ open, onClose, profile, onProfileChange, onSave }) => {
   return (
@@ -107,10 +100,10 @@ const ProfileUpdateModal = ({ open, onClose, profile, onProfileChange, onSave })
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
-          <Button type='submit' variant='contained' color='primary'>
+          <CustomButton onClick={onClose}>Cancel</CustomButton>
+          <CustomButton type='submit' variant='contained' color='primary'>
             Save
-          </Button>
+          </CustomButton>
         </DialogActions>
       </form>
     </Dialog>

@@ -41,31 +41,31 @@ function App() {
         <Box component='main' flexGrow={1}>
           <TransitionGroup>
             <CSSTransition key={location.key} classNames='fade' timeout={300}>
-          <Routes location={location}>
-            <Route path='/home' element={<HomePage />} />
-            <Route
-              path='/login'
-              element={
-                <PublicRoute>
-                  <LoginPage />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path='/register'
-              element={
-                <PublicRoute>
-                  <RegisterPage />
-                </PublicRoute>
-              }
-            />
-            <Route path='/profile' element={<ProfilePage />} />
-            <Route path='/dashboard' element={<DashboardPage />} />
-            <Route path='/purchases' element={<PurchasesList />} />
-            <Route path='/details/:symbol' element={<StockDetails />} />
-            <Route path='*' element={<Navigate to='/home' replace />} />
-          </Routes>
-          </CSSTransition>
+              <Routes location={location}>
+                <Route path='/home' element={<HomePage />} />
+                <Route
+                  path='/login'
+                  element={
+                    <PublicRoute>
+                      <LoginPage />
+                    </PublicRoute>
+                  }
+                />
+                <Route
+                  path='/register'
+                  element={
+                    <PublicRoute>
+                      <RegisterPage />
+                    </PublicRoute>
+                  }
+                />
+                <Route path='/profile' element={<ProfilePage />} />
+                <Route path='/dashboard' element={<DashboardPage />} />
+                <Route path='/purchases' element={<PurchasesList />} />
+                <Route path='/details/:symbol' element={<StockDetails />} />
+                <Route path='*' element={<Navigate to='/home' replace />} />
+              </Routes>
+            </CSSTransition>
           </TransitionGroup>
         </Box>
         <Footer />

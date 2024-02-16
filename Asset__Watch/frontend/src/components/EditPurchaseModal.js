@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  Button,
-} from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
 import PropTypes from "prop-types";
 import { format, parseISO } from "date-fns";
+import CustomButton from "./CustomButton";
 
 const EditPurchaseModal = ({ open, onClose, purchase, onSave }) => {
   const [formData, setFormData] = useState({
@@ -79,8 +73,8 @@ const EditPurchaseModal = ({ open, onClose, purchase, onSave }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Save</Button>
+        <CustomButton onClick={onClose}>Cancel</CustomButton>
+        <CustomButton onClick={handleSubmit}>Save</CustomButton>
       </DialogActions>
     </Dialog>
   );

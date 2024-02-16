@@ -13,6 +13,7 @@ import {
   BottomNavigation,
   BottomNavigationAction,
 } from "@mui/material";
+import "./css/nav.css";
 import HomeIcon from "@mui/icons-material/Home";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
@@ -44,7 +45,7 @@ const NavBar = () => {
 
   const navigationItems = isAuthenticated
     ? [
-        { label: "Home", icon: <HomeIcon />, path: "/" },
+        // { label: "Home", icon: <HomeIcon />, path: "/" },
         { label: "Dashboard", icon: <DashboardIcon />, path: "/dashboard" },
         { label: "Purchases", icon: <ShoppingBasketIcon />, path: "/purchases" },
       ]

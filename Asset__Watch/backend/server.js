@@ -68,5 +68,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Fixed the naming issue on first login"
+// git  commit -m"Removed Home from Nav"
 // git push
