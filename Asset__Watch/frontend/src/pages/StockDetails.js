@@ -39,7 +39,7 @@ const StockDetails = () => {
   useEffect(() => {
     const fetchDetailsAndWatchlistStatus = async () => {
       setLoading(true);
-  
+
       // Fetch Stock Details
       try {
         const stockResponse = await axios.get(
@@ -49,7 +49,7 @@ const StockDetails = () => {
       } catch (error) {
         console.error("Failed to fetch stock details:", error);
       }
-  
+
       // Fetch News Articles
       try {
         const newsResponse = await axios.get(
@@ -59,10 +59,13 @@ const StockDetails = () => {
         );
         setNewsArticles(newsResponse.data.articles.slice(0, 5));
       } catch (error) {
-        console.warn("Failed to fetch news data or News API is not available in production:", error);
+        console.warn(
+          "Failed to fetch news data or News API is not available in production:",
+          error
+        );
         setNewsArticles([]); // Consider setting to a default state or value
       }
-  
+
       // Fetch Watchlist Status
       try {
         const watchListResponse = await axiosInstance.get(`/watchlist/${userId}`);
@@ -70,10 +73,10 @@ const StockDetails = () => {
       } catch (error) {
         console.error("Failed to fetch watchlist status:", error);
       }
-  
+
       setLoading(false);
     };
-  
+
     fetchDetailsAndWatchlistStatus();
   }, [symbol, userId]);
 
@@ -101,6 +104,7 @@ const StockDetails = () => {
       navigate(`/details/${searchSymbol.symbol}`);
     }
   };
+
 
   const toggleExpanded = (id) => {
     setExpandedIds((prev) => ({ ...prev, [id]: !prev[id] }));

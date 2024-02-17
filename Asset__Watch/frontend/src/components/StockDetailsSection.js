@@ -72,7 +72,14 @@ const StockDetailsSection = ({
 
   return (
     <Container>
-      <Box sx={{ my: 10, display: "flex", justifyContent: "center" }}>
+      <Typography variant='h5' sx={{ mt: 10, mb: 3 }}>
+        Here you can search for specific stocks details and the latest news about the company!
+      </Typography>
+      <Typography variant='body1'>
+        {" "}
+        You can just start typing the name of your desired company below...{" "}
+      </Typography>
+      <Box sx={{ my: 5, display: "flex", justifyContent: "center", alignItems: "center" }}>
         <Autocomplete
           disablePortal
           options={allStocks}

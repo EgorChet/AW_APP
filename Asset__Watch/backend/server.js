@@ -68,5 +68,5 @@ app.get("*", (req, res) => {
 });
 
 // git add .
-// git  commit -m"Removed Home from Nav"
+// git  commit -m"Added Search into Nav"
 // git push

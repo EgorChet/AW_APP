@@ -15,16 +15,14 @@ const Footer = () => {
     >
       <Container maxWidth='lg'>
         <Grid container spacing={4} alignItems='center'>
-          {/* Logo on the left */}
           <Grid item xs={12} sm={4} md={3}>
-            <Box display='flex' justifyContent={{ xs: "center", sm: "flex-start" }}>
-              <Link href='/home'>
-                <Logo
-                  style={{ height: "100px", maxWidth: "100%", margin: "0 auto" }}
-                  alt='Asset Watch'
-                />
-              </Link>
-            </Box>
+            <Typography
+              variant='subtitle1'
+              color='text.secondary'
+              align={matchesSM ? "right" : "center"} // Use conditional rendering based on the screen size
+            >
+              Made by Egor Chetverikov &copy; {new Date().getFullYear()}
+            </Typography>
           </Grid>
 
           {/* Social media icons centered */}
@@ -43,14 +41,16 @@ const Footer = () => {
           </Grid>
 
           {/* Attribution text on the right */}
+          {/* Logo on the left */}
           <Grid item xs={12} sm={4} md={3}>
-            <Typography
-              variant='subtitle1'
-              color='text.secondary'
-              align={matchesSM ? "right" : "center"} // Use conditional rendering based on the screen size
-            >
-              Made by Egor Chetverikov &copy; {new Date().getFullYear()}
-            </Typography>
+            <Box display='flex' justifyContent={{ xs: "center", sm: "flex-end" }}>
+              <Link href='/home'>
+                <Logo
+                  style={{ height: "100px", maxWidth: "100%", margin: "0 auto" }}
+                  alt='Asset Watch'
+                />
+              </Link>
+            </Box>
           </Grid>
         </Grid>
       </Container>

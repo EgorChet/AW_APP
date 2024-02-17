@@ -202,37 +202,3 @@ export const selectHasPortfolio = (state) => state.auth.hasPortfolio;
 export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;
-
-// export const loginUser = createAsyncThunk("auth/login", async (userData, { rejectWithValue }) => {
-//   try {
-//     const response = await axiosInstance.post(`/users/login`, userData);
-//     const { accessToken, email } = response.data;
-
-//     // Store the access token in localStorage for later use
-//     // After storing the token in loginUser async thunk or similar login handling function
-//     localStorage.setItem("token", accessToken);
-//     console.log("Token stored in localStorage:", localStorage.getItem("token"));
-
-//     // Return user details for Redux state (adjust according to your needs)
-//     return { user: { email }, accessToken };
-//   } catch (error) {
-//     return rejectWithValue(error.response.data);
-//   }
-// });
-
-// .addCase(loginUser.fulfilled, (state, action) => {
-//   // Store both user details and accessToken in the state
-//   state.user = action.payload.user;
-//   state.accessToken = action.payload.accessToken; // Store the accessToken
-//   state.isAuthenticated = true;
-//   state.status = "succeeded";
-//   state.error = null;
-// })
-
-// const initialState = {
-//   user: null,
-//   accessToken: null,
-//   isAuthenticated: false,
-//   status: "idle",
-//   error: null,
-// };

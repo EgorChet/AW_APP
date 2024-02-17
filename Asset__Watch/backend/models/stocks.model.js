@@ -9,7 +9,6 @@ export async function addUserStock(
   purchasePrice,
   purchaseDate
 ) {
-  // const purchaseDate = new Date().toISOString().slice(0, 10); // Current date in YYYY-MM-DD format
 
   // Insert the new purchase record
   await db("purchases").insert({
@@ -272,98 +271,3 @@ export const editPurchaseAndUpdateStock = async (purchaseId, userId, updatedDeta
     }
   });
 };
-
-// export const deletePurchaseAndUpdateStock = async (purchaseId, userId) => {
-//   // Begin a transaction to ensure data consistency
-//   return db
-//     .transaction(async (trx) => {
-//       const deletedPurchase = await trx("purchases").where({ id: purchaseId }).first().del();
-//       if (!deletedPurchase) {
-//         throw new Error("Purchase not found");
-//       }
-
-//       // Assuming you need to fetch the stock symbol for the deleted purchase
-//       // This is critical for knowing which stock's data to update in user_stocks
-//       const stockSymbol = deletedPurchase.stock_symbol;
-
-//       const { currentPrice, companyName } = await fetchCurrentStockPrice(stockSymbol);
-
-//       // Fetch all remaining purchases for this stock and user
-//       const purchases = await trx("purchases").where({
-//         user_id: userId,
-//         stock_symbol: stockSymbol,
-//       });
-
-//       // Aggregate calculations
-//       let totalShares = 0;
-//       let totalPurchaseAmount = 0;
-//       purchases.forEach((purchase) => {
-//         totalShares += purchase.number_of_stocks_purchased;
-//         totalPurchaseAmount += purchase.number_of_stocks_purchased * purchase.purchase_price;
-//       });
-
-//       const averagePrice = totalShares > 0 ? totalPurchaseAmount / totalShares : 0;
-//       const totalValue = totalShares * currentPrice;
-//       const currentGains = (currentPrice - averagePrice) * totalShares;
-//       const currentGainsPercentage = ((currentPrice - averagePrice) / averagePrice) * 100;
-
-//       // Update the user_stocks table with the new values
-//       await trx("user_stocks")
-//         .where({
-//           user_id: userId,
-//           stock_symbol: stockSymbol,
-//         })
-//         .update({
-//           numberofshares: totalShares,
-//           average_price: averagePrice,
-//           current_price: currentPrice,
-//           total_value: totalValue,
-//           current_gains: currentGains,
-//           current_gains_percentage: currentGainsPercentage,
-//           company_name: companyName,
-//         });
-//     })
-//     .catch((error) => console.error("Transaction error:", error));
-// };
-
-// // models/stocks.model.js
-// export const deletePurchaseAndUpdateStock = async (purchaseId, userId) => {
-//   // Begin a transaction to ensure data consistency
-//   return db.transaction(async trx => {
-//     // Delete the purchase
-//     await trx('purchases').where({ id: purchaseId }).del();
-
-//     // Recalculate the user's stock information for the affected stock
-//     // Fetch all remaining purchases for this stock
-//     const purchases = await trx('purchases').where({ user_id: userId });
-
-//     // Aggregate calculations
-//     let totalShares = 0;
-//     let totalPurchaseAmount = 0;
-//     purchases.forEach(purchase => {
-//       totalShares += purchase.number_of_stocks_purchased;
-//       totalPurchaseAmount += purchase.number_of_stocks_purchased * purchase.purchase_price;
-//     });
-
-//     const averagePrice = totalShares > 0 ? totalPurchaseAmount / totalShares : 0;
-//     // Assuming you have a way to fetch the current stock price
-//     const currentPrice = await fetchCurrentStockPrice(/* stock symbol */);
-
-//     const totalValue = totalShares * currentPrice;
-//     const currentGains = (currentPrice - averagePrice) * totalShares;
-//     const currentGainsPercentage = ((currentPrice - averagePrice) / averagePrice) * 100;
-
-//     // Update the user_stocks table with the new values
-//     await trx('user_stocks').where({
-//       user_id: userId,
-//       // You need the stock symbol here, ensure you have it when calling this function
-//     }).update({
-//       numberofshares: totalShares,
-//       average_price: averagePrice,
-//       current_price: currentPrice,
-//       total_value: totalValue,
-//       current_gains: currentGains,
-//       current_gains_percentage: currentGainsPercentage,
-//     });
-//   });
-// };
