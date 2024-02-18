@@ -13,6 +13,7 @@ import ProfileDetails from "../components/ProfileDetails";
 import AddStockForm from "../components/AddStocksForm";
 import CustomButton from "../components/CustomButton";
 import DashboardHeader from "../components/DashboardHeader";
+import { useTheme } from "@mui/material/styles";
 
 const Dashboard = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -22,6 +23,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const [showAddStockForm, setShowAddStockForm] = useState(false);
+
+  const theme = useTheme();
 
   useEffect(() => {
     // This effect depends on the isAuthenticated state to make decisions.
@@ -74,7 +77,8 @@ const Dashboard = () => {
           mt: 10,
           p: 3,
           borderRadius: 2,
-          bgcolor: "grey.100",
+          bgcolor: theme.palette.background.default,
+          color: theme.palette.text.primary, 
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -95,7 +99,8 @@ const Dashboard = () => {
 
       {showAddStockForm && <AddStockForm onStockAdded={onStockAdded} />}
 
-      <Box sx={{ mt: 2, bgcolor: "background.paper", p: 3, borderRadius: 2 }}>
+      <Box sx={{ mt: 4, mb: 4, bgcolor: theme.palette.background.default,
+    color: theme.palette.text.primary, p: 3, borderRadius: 2 }}>
         <Portfolio stocks={processedStocks} />
       </Box>
     </Container>

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useTheme } from "@mui/material/styles";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -7,7 +8,6 @@ import {
   selectCurrentUser,
 } from "./features/auth/authSlice";
 import LoginPage from "./pages/Login";
-import ProfilePage from "./pages/Profile";
 import RegisterPage from "./pages/Register";
 import HomePage from "./pages/Home";
 import NavBar from "./pages/Nav";
@@ -29,14 +29,22 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated && currentUser?.id) {
-      // Fetch user profile only if authenticated and user ID is available
       dispatch(fetchUserProfile(currentUser.id));
     }
   }, [dispatch, isAuthenticated, currentUser?.id]);
 
+  // Correct usage of useTheme within the component body after correcting the import
+  const theme = useTheme();
+
   return (
     <CustomThemeProvider>
-      <Box className='App' display='flex' flexDirection='column' minHeight='100vh'>
+      <Box
+        className='App'
+        display='flex'
+        flexDirection='column'
+        minHeight='100vh'
+        sx={{ bgcolor: theme.palette.background.default }}
+      >
         <NavBar />
         <Box component='main' flexGrow={1}>
           <TransitionGroup>
@@ -59,7 +67,7 @@ function App() {
                     </PublicRoute>
                   }
                 />
-                <Route path='/profile' element={<ProfilePage />} />
+                {/* <Route path='/profile' element={<ProfilePage />} /> */}
                 <Route path='/dashboard' element={<DashboardPage />} />
                 <Route path='/purchases' element={<PurchasesList />} />
                 <Route path='/details/:symbol' element={<StockDetails />} />

@@ -7,6 +7,8 @@ import { ReactComponent as Logo } from "../components/logo_assetwatch_schwarz.sv
 const Footer = () => {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.up("sm"));
+  // Custom media query for screen sizes between 600px and 900px
+  const between600And900 = useMediaQuery("(min-width:600px) and (max-width:900px)");
 
   return (
     <Box
@@ -18,16 +20,23 @@ const Footer = () => {
           <Grid item xs={12} sm={4} md={3}>
             <Typography
               variant='subtitle1'
-              color='text.secondary'
-              align={matchesSM ? "right" : "center"} // Use conditional rendering based on the screen size
+              color='black.paper'
+              align={matchesSM ? "right" : "center"}
             >
               Made by Egor Chetverikov &copy; {new Date().getFullYear()}
             </Typography>
           </Grid>
 
-          {/* Social media icons centered */}
           <Grid item xs={12} sm={4} md={6}>
-            <Box display='flex' justifyContent='space-between' mx={{ xs: 2, sm: 10 }}>
+            <Box
+              display='flex'
+              justifyContent='space-between'
+              mx={{
+                xs: 2, // for extra small devices
+                sm: between600And900 ? 3 : 8, // adjust margin for screens between 600px and 900px
+                md: 10, // for medium devices and up
+              }}
+            >
               <Link href='https://www.facebook.com/' target='_blank' color='inherit'>
                 <FontAwesomeIcon icon={faFacebookF} size='2x' />
               </Link>
@@ -40,8 +49,6 @@ const Footer = () => {
             </Box>
           </Grid>
 
-          {/* Attribution text on the right */}
-          {/* Logo on the left */}
           <Grid item xs={12} sm={4} md={3}>
             <Box display='flex' justifyContent={{ xs: "center", sm: "flex-end" }}>
               <Link href='/home'>

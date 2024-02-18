@@ -189,13 +189,12 @@ const ProfileDetails = () => {
             justifyContent: "center",
             boxShadow: 3,
             borderRadius: 2,
-            bgcolor: "background.paper",
             height: "100%",
           }}
         >
           <Box sx={{ p: 3, width: "70%" }}>
             <Typography
-              variant='body1'
+              variant='h5'
               gutterBottom
               component='div'
               sx={{ textAlign: "center", fontWeight: "bold" }}
@@ -214,7 +213,7 @@ const ProfileDetails = () => {
               }}
             >
               {selectedQuote.quote}
-              <Typography variant='body1' sx={{ color: "text.secondary", mb: 1 }}>
+              <Typography variant='body1' sx={{ color: "black", mb: 1 }}>
                 - {selectedQuote.author}
               </Typography>{" "}
               {/* Display the random quote */}
@@ -233,7 +232,7 @@ const ProfileDetails = () => {
           }}
         >
           <Typography
-            variant='body1'
+            variant='h5'
             gutterBottom
             component='div'
             sx={{ textAlign: "center", fontWeight: "bold", mt: 4 }}

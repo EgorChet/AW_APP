@@ -50,7 +50,7 @@ const WorldIndices = () => {
             key={idx}
             sx={{ p: 2, mb: 2, backgroundColor: index.change >= 0 ? "#e8f5e9" : "#ffebee" }}
           >
-            <Typography variant='h6' component='div'>
+            <Typography variant='h6' component='div' sx={{color: "#757575"}}>
               {index.symbol}: {index.latestPrice}
             </Typography>
             <Typography

@@ -102,29 +102,6 @@ export const _all = async (req, res) => {
   }
 };
 
-export const _refreshToken = async (req, res) => {
-  try {
-    const { refreshToken } = req.cookies;
-    if (!refreshToken) return res.status(401).json({ msg: "Unauthorized" });
-
-    jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, decoded) => {
-      if (err) return res.status(403).json({ msg: "Forbidden" });
-
-      // Issue a new access token
-      const accessToken = jwt.sign(
-        { userid: decoded.userid, useremail: decoded.useremail },
-        process.env.JWT_ACCESS_SECRET,
-        { expiresIn: "15m" }
-      );
-
-      res.json({ accessToken });
-    });
-  } catch (error) {
-    console.log("_refreshToken=>", error);
-    res.status(500).json({ msg: "Something went wrong" });
-  }
-};
-
 export const _logout = (req, res) => {
   res.clearCookie("refreshToken", { path: "/users/refresh" }); // Match the path you set for your cookie
   res.status(200).json({ msg: "Logged out" });
@@ -172,3 +149,26 @@ export const updateAvatar = async (req, res) => {
     return res.status(500).json({ message: "Internal server error." });
   }
 };
+
+// export const _refreshToken = async (req, res) => {
+//   try {
+//     const { refreshToken } = req.cookies;
+//     if (!refreshToken) return res.status(401).json({ msg: "Unauthorized" });
+
+//     jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, decoded) => {
+//       if (err) return res.status(403).json({ msg: "Forbidden" });
+
+//       // Issue a new access token
+//       const accessToken = jwt.sign(
+//         { userid: decoded.userid, useremail: decoded.useremail },
+//         process.env.JWT_ACCESS_SECRET,
+//         { expiresIn: "15m" }
+//       );
+
+//       res.json({ accessToken });
+//     });
+//   } catch (error) {
+//     console.log("_refreshToken=>", error);
+//     res.status(500).json({ msg: "Something went wrong" });
+//   }
+// };

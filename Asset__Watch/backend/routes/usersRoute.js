@@ -4,7 +4,7 @@ import {
   _all,
   _login,
   _logout,
-  _refreshToken,
+  // _refreshToken,
   updateProfile,
   fetchUserProfile,
   updateAvatar,
@@ -14,7 +14,7 @@ import { verifytoken } from "../middlewares/verifyToken.js";
 const usersRouter = express.Router();
 
 usersRouter.get("/", verifytoken, _all);
-usersRouter.post("/refresh", _refreshToken);
+// usersRouter.post("/refresh", _refreshToken);
 usersRouter.get("/verify", verifytoken, (req, res) => {
   res.sendStatus(200);
 });

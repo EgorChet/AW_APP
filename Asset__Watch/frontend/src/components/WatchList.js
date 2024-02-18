@@ -219,18 +219,19 @@ const WatchList = () => {
                     cursor: "pointer",
                     fontWeight: "bold",
                     display: "inline",
+                    color: "black",
                   }}
                 >
                   {item.symbol}
                 </Typography>
                 {expandedItems[item.symbol] && (
-                  <Typography sx={{ display: "inline", marginLeft: 1, fontSize: "0.8rem" }}>
+                  <Typography sx={{ display: "inline", marginLeft: 1, fontSize: "0.8rem", color: "black" }}>
                     - {item.companyName}
                   </Typography>
                 )}
               </Grid>
               <Grid item>
-                <Typography sx={{ marginLeft: "2", marginRight: "2" }}>
+                <Typography sx={{ marginLeft: "2", marginRight: "2", color: "black" }}>
                   ${item.latestPrice.toFixed(2)}
                 </Typography>
                 <Typography sx={{ color: item.changePercent < 0 ? "red" : "green" }}>
@@ -239,6 +240,7 @@ const WatchList = () => {
               </Grid>
               <Grid item>
                 <IconButton
+                sx={{color: "#737373"}}
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent navigation when deleting
                     handleRemoveFromWatchList(item.symbol);
