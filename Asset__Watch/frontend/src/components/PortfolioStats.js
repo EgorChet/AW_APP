@@ -72,7 +72,7 @@ const PortfolioStats = ({ stocks }) => {
             title='Money Invested'
             value={`$${totalInvested.toFixed(0).toLocaleString("de-DE")}`}
             icon={<AccountBalanceWalletIcon sx={{ color: "white" }} />}
-            color='info.main'
+            color='#2f4d65'
           />
         </Grid>
         <Grid item xs={4}>
@@ -80,7 +80,7 @@ const PortfolioStats = ({ stocks }) => {
             title='Current Value'
             value={`$${currentPortfolioValue.toFixed(0).toLocaleString("de-DE")}`}
             icon={<AccountBalanceIcon sx={{ color: "white" }} />}
-            color='#123456'
+            color='#796f6d'
           />
         </Grid>
         <Grid item xs={4}>
@@ -94,7 +94,7 @@ const PortfolioStats = ({ stocks }) => {
                 <TrendingDownIcon sx={{ color: "white" }} />
               )
             }
-            color={gainLoss >= 0 ? "success.main" : "error.main"}
+            color={gainLoss >= 0 ? "success.light" : "error.main"}
           />
         </Grid>
       </Grid>
