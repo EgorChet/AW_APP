@@ -86,6 +86,11 @@ function LoginPage() {
             autoFocus
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            sx={{
+              "& .MuiInputBase-input": {
+                color: "black", // Set the color you want for the text
+              },
+            }}
           />
           <TextField
             variant='outlined'
@@ -99,6 +104,11 @@ function LoginPage() {
             autoComplete='current-password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            sx={{
+              "& .MuiInputBase-input": {
+                color: "black", // Set the color you want for the text
+              },
+            }}
           />
           <CustomButton
             type='submit'

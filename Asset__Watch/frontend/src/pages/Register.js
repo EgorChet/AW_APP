@@ -101,6 +101,11 @@ function RegisterPage() {
             onChange={(e) => setEmail(e.target.value)}
             error={!!backendErrors.email}
             helperText={backendErrors.email}
+            sx={{
+              "& .MuiInputBase-input": {
+                color: "black", // Set the color you want for the text
+              },
+            }}
           />
           <TextField
             variant='outlined'
@@ -116,6 +121,11 @@ function RegisterPage() {
             onChange={(e) => setPassword(e.target.value)}
             error={!!backendErrors.password}
             helperText={backendErrors.password}
+            sx={{
+              "& .MuiInputBase-input": {
+                color: "black", // Set the color you want for the text
+              },
+            }}
           />
           <CustomButton
             type='submit'
