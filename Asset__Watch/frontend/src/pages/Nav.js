@@ -128,6 +128,7 @@ const NavBar = () => {
             )}
             {!isMobile && !isTablet && (
               <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <ThemeSwitch />
                 {navigationItems.map((item, index) => (
                   <Button
                     key={index}
@@ -138,6 +139,7 @@ const NavBar = () => {
                     {item.label}
                   </Button>
                 ))}
+                
                 {isAuthenticated && (
                   <>
                     <Button
@@ -150,8 +152,6 @@ const NavBar = () => {
                     >
                       Logout
                     </Button>
-                    {/* Include ThemeSwitch for desktop layouts here */}
-                    <ThemeSwitch />
                     <InputBase
                       placeholder='Search...'
                       inputProps={{ "aria-label": "search" }}
