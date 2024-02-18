@@ -131,30 +131,32 @@ function RegisterPage() {
       </Box>
 
       {/* Features Overview */}
-      <Grid container spacing={4} sx={{ my: 2, mb: 7 }}>
-        <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 2, height: "100%" }}>
-            <Typography variant='h6'>Real-Time Tracking</Typography>
-            <Typography>
-              Stay updated with the latest changes in your investment portfolio.
-            </Typography>
-          </Paper>
+      <Grid container spacing={{ xs: 2, sm: 3, md: 4 }} sx={{ my: 4 }}>
+          <Grid item xs={12} sm={6} md={4}>
+            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <Typography variant='h6'>Real-Time Tracking</Typography>
+              <Typography>
+                Stay updated with the latest changes in your investment portfolio.
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <Typography variant='h6'>Global Market Indices</Typography>
+              <Typography>
+                Monitor major market indices from around the world at a glance.
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <Typography variant='h6'>Insightful Analytics</Typography>
+              <Typography>
+                Gain insights with detailed analytics and reports on your assets.
+              </Typography>
+            </Paper>
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 2, height: "100%" }}>
-            <Typography variant='h6'>Global Market Indices</Typography>
-            <Typography>Monitor major market indices from around the world at a glance.</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 2, height: "100%" }}>
-            <Typography variant='h6'>Insightful Analytics</Typography>
-            <Typography>
-              Gain insights with detailed analytics and reports on your assets.
-            </Typography>
-          </Paper>
-        </Grid>
-      </Grid>
     </Container>
   );
 }
